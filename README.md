@@ -29,11 +29,9 @@
 ![icmplib](https://img.shields.io/badge/icmplib-v3.0.4-blue)
 ![paramiko](https://img.shields.io/badge/paramiko-v3.4.0-blue)
 
-or just [jump to the conclusion](#func)
-
 
 ### Database
- ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
+![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
 
 ### Static files, ssl, proxy
 ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
