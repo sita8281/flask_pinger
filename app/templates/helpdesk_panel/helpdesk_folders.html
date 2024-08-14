@@ -1,0 +1,9 @@
+
+
+{% for folder in folders %}
+
+    <a class="a-folders" href="javascript:showHelpdeskUsers({{ folder[1] }});" style="display: block;">
+        <img src="../images/folder16.png{{ static_ver }}" alt=""> {{ folder[0] }}
+    </a>
+
+{% endfor %}

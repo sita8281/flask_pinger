@@ -1,0 +1,60 @@
+
+.tree__div {
+    min-width: 300px;
+    max-width: 300px;
+    margin-left: 10px;
+    margin-top: 10px;
+    background-color: #ffffff;
+    font-size: 14px;
+    border: 1px solid rgb(218, 141, 141);
+}
+
+.tree__label {
+    background-color: rgb(218, 141, 141);
+    text-align: center;
+    font-size: 20px;
+}
+
+.tree__list {
+    height: 750px;
+    overflow-y: scroll;
+}
+
+.tree__list a {
+    display: block;
+    text-decoration: none;
+    color: black;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.tree__list a:hover {
+    display: block;
+    text-decoration: none;
+    color: rgb(9, 34, 255);
+    text-decoration: underline;
+}
+
+.nested__div {
+    display: none;
+    margin-left: 20px;
+}
+
+.nested__div a img {
+    margin-right: 5px;
+}
+
+
+.info__div {
+    min-width: 600px;
+    margin-left: 10px;
+    margin-top: 10px;;
+    background-color: #ffffff;
+    border: 1px solid rgb(218, 141, 141);
+}
+
+.info__label {
+    background-color: rgb(218, 141, 141);
+    text-align: center;
+    font-size: 20px;
+}

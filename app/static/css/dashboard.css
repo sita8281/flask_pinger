@@ -1,0 +1,122 @@
+.body, html {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(245, 245, 245);
+}
+
+.dash-board {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dash-top {
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dash-label {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: rgb(231, 231, 231);
+    display: block;
+    height: 50px;
+    width: 100%;
+    font-size: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+
+}
+
+.dash-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+.panel {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 10px;
+    box-sizing:border-box;
+    background-color: white;
+    width: 500px;
+    margin: 15px;
+    box-shadow: 0px 0px 10px 1px rgba(87,87,87,0.50);
+    -webkit-box-shadow: 0px 0px 10px 1px rgba(87,87,87,0.50);
+    -moz-box-shadow: 0px 0px 10px 1px rgba(87,87,87,0.50);
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-label {
+    font-size: 20px;
+    color: rgb(0, 11, 43);
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid silver;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 5px;
+}
+
+
+.href-a {
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    min-height: 30px;
+    line-height: 30px;
+    text-decoration: none;
+    color: rgb(0, 87, 185);
+    align-items: center;
+}
+
+.href-a:hover {
+    background-color: rgb(224, 224, 224);
+    text-decoration: underline;
+
+}
+
+.href-a img {
+    margin-left: 5px;
+    height: 25px;
+    vertical-align: middle;
+}
+
+.dead-host {
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    min-height: 30px;
+    align-items: center
+
+}
+
+.dead-host img {
+    height: 25px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.dead-host a {
+    color: rgb(0, 87, 185);
+    text-decoration: none;
+}
+
+.dead-host:hover {
+    background-color: rgb(224, 224, 224);
+    text-decoration: underline;
+}
+
+
+.dead-host a:hover {
+    text-decoration: underline;
+}
+
+.online-users img {
+    height: 25px;
+}
+
+
+
+

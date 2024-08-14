@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_panel.css') }}{{ static_ver }}">
+    <title>Document</title>
+</head>
+
+{% include 'header.html' %}
+
+<body>
+    <div class="admin-panel-div">
+        <div class="div-label">Админ панель</div>
+        <div class="admin-panel-divs">
+            <div class="admin-panel-left-div">{% include 'admin_panel/admin_panel_left.html' %}</div>
+            <hr>
+            <div class="admin-panel-right-div">
+                <div class="admin-panel-right-label">ICMP настройки</div>
+                <div>
+                    <form action="" method="post">
+                        <p>
+                            Автопроверка хостов каждые {{ form.ping_interval() }} секунд
+                        </p>
+                        <p>
+                            Количество ICMP пакетов на хост {{ form.icmp_count() }}
+                        </p>
+                        <p>
+                            Задержка между отправкой ICMP пакетов на хост {{ form.icmp_interval() }} секунд
+                        </p>
+                        <p>
+                            Количество рабочих потоков при проверке {{ form.ping_workers() }} (влияет на скорость проверки)
+                        </p>
+                        <p>
+                            Timeout ICMP пакета {{ form.icmp_timeout() }} секунд
+                        </p>
+                        <p>
+                            {{ form.submit() }}
+                        </p>
+                        </form>
+                </div>
+                {% for category, message in get_flashed_messages(with_categories=true) %}
+                    <a class="flash-{{ category }}">{{ message }}</a>
+                {% endfor %}
+            </div>
+            
+        </div>
+         
+    </div>
+    
+</body>
+</html>

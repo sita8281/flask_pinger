@@ -1,0 +1,111 @@
+.register__div {
+    height: 750px;
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+.window__container {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+}
+
+.window__gpon {
+    background-color: azure;
+    width: 300px;
+    border: 1px solid;
+    padding: 1px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+.window__gpon label {
+    background-color: rgb(0, 106, 177);
+    color: white;
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+
+.window__gpon span {
+    display: block;
+    padding: 20px;
+}
+
+.buttons__div button {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#loading-gpon, #error, #autofind-notfound {
+    display: none;
+}
+
+#autofind-table {
+    display: none;
+    width: 100%;
+    border: 1px solid;
+    background-color: rgb(216, 216, 216);
+    border-spacing: 1px;
+}
+
+#autofind-table th {
+    width: 100%;
+    background-color: rgb(0, 106, 177);
+    color: white;
+    width: 20%;
+}
+
+#autofind-table td {
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: rgb(255, 255, 255);
+}
+
+#register_form {
+    display: none;
+}
+
+.register__form {
+    text-align: center;
+}
+
+.register__form input {
+    width: 200px;
+    margin-top: 10px;
+}
+
+.register__form select {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+    margin-top: 10px;
+}
+
+.register__form button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#notify {
+    display: none;
+}
+
+button {
+    border-radius: 3px;
+    background-color: #0176bc;
+    border: 1px #0f5c84 solid;
+    color: white;
+    font-size: 15px;
+    height: 30px;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #005f96;
+    border: 1px rgb(0, 57, 95) solid;
+}

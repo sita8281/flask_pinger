@@ -1,0 +1,6 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/helpdesk_panel/helpdesk_add.css') }}{{ static_ver }}">
+<div class="form-input">
+    <div><input type="text" autocomplete="off" placeholder="Тема.." id="subj"></div>
+    <div><textarea cols="30" rows="10" maxlength="300" placeholder="Описание.." id="text-info"></textarea></div>
+    <div style="display: flex;"><a class="a-create" href="javascript:sendPost({{ iid }});">Создать</a></div>
+</div>

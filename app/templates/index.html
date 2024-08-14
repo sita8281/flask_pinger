@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main_menu.css') }}{{ static_ver }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Menu</title>
+</head>
+
+<body>
+    <div class="main-menu">
+
+        {% include 'header.html' %}
+
+        <div class="title-menu">
+            <a class="a-menu">Добро пожаловать, {{ current_user.login }}</a>
+        </div>
+
+        <div class="content-menu">
+            <a class="href-a" href="{{ url_for('carbon_main') }}">
+                <img src="{{ url_for('static', filename='img/carbon32.png') }}{{ static_ver }}" alt=""
+                    style="margin-right: 5px;">Carbon Manager
+            </a>
+
+            <a class="href-a" href="{{ url_for('main_pinger', folder='all') }}">
+                <img src="{{ url_for('static', filename='img/server2.png') }}{{ static_ver }}" alt="" style="margin-right: 5px;">Pinger
+            </a>
+
+            <a class="href-a" href="{{ url_for('search_port_login') }}">
+                <img src="{{ url_for('static', filename='img/search_port.png') }}{{ static_ver }}" alt=""
+                    style="margin-right: 5px;">Search Port
+            </a>
+
+            <a class="href-a" href="{{ url_for('helpdesk_main') }}">
+                <img src="{{ url_for('static', filename='img/operator32.png') }}{{ static_ver }}" alt=""
+                    style="margin-right: 5px;">HelpDesk
+            </a>
+
+            <a class="href-a" href="{{ url_for('gpon_panel') }}">
+                <img src="{{ url_for('static', filename='img/huawei32.png') }}{{ static_ver }}" alt="" style="margin-right: 5px;">Gpon
+                Interface
+            </a>
+
+            <a class="href-a" href="{{ url_for('connect_statements') }}">
+                <img src="{{ url_for('static', filename='img/operator32.png') }}{{ static_ver }}" alt="" style="margin-right: 5px;">Доп.
+                заявки
+            </a>
+
+            <a class="href-a" href="{{ url_for('admin_panel') }}">
+                <img src="{{ url_for('static', filename='img/server_settings.png') }}{{ static_ver }}" alt=""
+                    style="margin-right: 5px;">Админ Панель
+            </a>
+
+            <a class="href-a" href="{{ url_for('configs') }}">
+                <img src="{{ url_for('static', filename='img/cfg/cfg.svg') }}{{ static_ver }}"
+                    style="margin-right: 5px;width:32px">Хранилище конфигов
+            </a>
+
+
+
+        </div>
+
+        <div class="adv-content">
+
+        </div>
+        <div style="width: 100%; display: flex;"><a
+                style="margin-left: auto; margin-right: auto; margin-top: 20px; font-size: 20px; color: rgb(0, 0, 0);"
+                href="/logout/">Выйти</a></div>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gpon_panel/generic.css') }}{{ static_ver }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gpon_panel/mac_page.css') }}{{ static_ver }}">
+    <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}{{ static_ver }}"></script>
+
+    <title>Gpon Panel</title>
+
+    <style>
+        #mac_table_ont {
+            background-color: rgb(144, 203, 255);
+            border-radius: 5px;
+        } 
+    </style>
+    
+</head>
+`   
+{% include 'header.html' %}
+<body>
+
+    <div class="main__div">
+
+        <div class="label__div">GPON Interface</div>
+        
+        <div class="content__div">
+
+            {% include 'gpon_panel/left_panel.html' %}
+            
+            <div class="mac-content">
+                <div class="top-panel">
+                    <button class="button" onclick="loadMAC('garage')">Гараж</button>
+                    <button class="button" onclick="loadMAC('etag')">Пятиэтажка</button>
+                    <input type="text" autocomplete="off" placeholder="Поиск по MAC" id="search-input">
+                </div>
+                <div class="mac-table-div">
+                    <table>
+                        <thead>
+                            <th></th>
+                            <th><label>Service-Port</label></th>
+                            <th><label>ONT ID</label></th>
+                            <th><label>Port</label></th>
+                            <th><label>Slot</label></th>
+                            <th><label>VLAN</label></th>
+                            <th class="mac-column"><label>MAC</label></th>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading-div">
+        <img src="{{ url_for('static', filename='img/gpon/loading.gif') }}{{ static_ver }}">
+    </div>
+    <div class="error-win">
+        <div class="window__gpon" id="error">
+            <label><img src="{{ url_for('static', filename='img/gpon/error.png') }}{{ static_ver }}">Ошибка</label>
+            <span>При выполнении процедуры возникла ошибка, возможно это связанно с плохим соединением</span>
+            <button onclick="closeErrorWin()">Закрыть</button>
+        </div>
+    </div>
+        
+<script>
+
+    const table = document.querySelector(".mac-table-div table");
+    const th = table.querySelectorAll("th");
+    
+
+    th.forEach((header) => {
+    header.addEventListener("click", function () {
+
+        let tbody = table.querySelector("tbody");
+        let rows = [...tbody.rows];
+
+        let columnIndex = header.cellIndex;
+        let sortDirection =
+        header.getAttribute("data-sort-direction") === "asc" ? "desc" : "asc";
+        header.setAttribute("data-sort-direction", sortDirection)
+        rows.sort((a, b) => {
+        let aValue = a.cells[columnIndex].textContent;
+        let bValue = b.cells[columnIndex].textContent
+        if (sortDirection === "asc") {
+            return aValue > bValue ? 1 : -1;
+        } else {
+            return bValue > aValue ? 1 : -1;
+        }
+        })
+        tbody.remove();
+        tbody = document.createElement("tbody");
+        rows.forEach((row) => tbody.appendChild(row));
+        table.appendChild(tbody);
+    });
+    });
+
+
+    //обработчик поля поиска хостов
+    //прослушиватель ввода текста в поле
+    document.querySelector('#search-input').addEventListener('input', searchHostsHandler)
+    //функция обработки введёного текста
+    function searchHostsHandler(widget) {
+        
+        //получаем из таблицы список хостов
+        let hosts = document.querySelector('.mac-table-div table').
+          querySelector('tbody').querySelectorAll('tr')
+        
+        //получаем введёный текст, уменьшаем его
+        let text = widget.target.value.toLowerCase();
+        //если поле поиска полностью пустое, возращаем видимость всем хостам
+        if (!text) {
+            //в цикле меняем style.display
+            hosts.forEach(function(host) {
+                    host.style.display = 'table-row';
+            })  
+            return;
+        }
+        
+        //цикл поиска по хостам (имя и ip)
+        hosts.forEach(function(host) {
+            let mac = host.children[6].textContent.toLowerCase();
+            
+            if (mac.indexOf(text) == -1) {
+                host.style.display = 'none';
+            } else {
+                host.style.display = 'table-row';
+            }
+        })
+            
+    }
+
+
+    function clearTable() {
+        $('table tbody tr').remove();
+    }
+
+    function loadMAC(gpon) {
+
+        clearTable();
+        $('.loading-div').css('display', 'block')
+
+        $.ajax({
+            type: "post",
+            url: "/gpon_panel/mac/" + gpon,
+            dataType: "json",
+            timeout: 30000,
+            success: function (response) {
+
+                let lst = response['lst']
+
+                if ('error' in lst) {
+                    $('.loading-div').css('display', 'none')
+                    $('.error-win').css('display', 'block')
+                    return;
+                }
+                $.each(lst, function (indexInArray, valueOfElement) { 
+                    let rowData = `
+                    <tr>
+                        <td><img src="{{ url_for('static', filename='img/gpon/file16.png') }}{{ static_ver }}" alt=""></td>
+                        <td>${valueOfElement["srv"]}</td>
+                        <td>${valueOfElement["ont_id"]}</td>
+                        <td>${valueOfElement["port"]}</td>
+                        <td>${valueOfElement["slot"]}</td>
+                        <td>${valueOfElement["vlan"]}</td>
+                        <td>${valueOfElement["mac"]}</td>
+                    </tr>
+                    `
+                    $(rowData).appendTo('tbody');
+                });
+
+                $('.loading-div').css('display', 'none')
+            },
+            error: function (err) {
+                $('.loading-div').css('display', 'none')
+                $('.error-win').css('display', 'block')
+            }
+        });
+    }
+
+    function closeErrorWin() {
+        $('.error-win').css('display', 'none')
+    }
+
+    
+</script>
+</body>

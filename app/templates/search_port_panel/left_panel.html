@@ -1,0 +1,37 @@
+<div class="left_panel">
+    <div class="left-panel-a-container">
+        
+        <a href="{{ url_for('search_port_login') }}" id="search-login">
+            <img src="{{ url_for('static', filename='img/search_port/search.png') }}{{ static_ver }}">
+            Поиск по логину
+        </a>
+    </div>
+    <div class="separator"></div>
+    <div class="left-panel-a-container">
+        <a href="{{ url_for('search_port_mac') }}" id="search-mac">
+            <img src="{{ url_for('static', filename='img/search_port/search.png') }}{{ static_ver }}">
+            Поиск по MAC
+        </a>
+    </div>
+    <div class="separator"></div>
+    <div class="left-panel-a-container">
+        <a href="{{ url_for('search_port_list_sw') }}" id="sw-dumps">
+            <img src="{{ url_for('static', filename='img/search_port/list.png') }}{{ static_ver }}">
+            Список SW-dumps
+        </a>
+    </div>
+    <div class="separator"></div>
+    <div class="left-panel-a-container">
+        <a href="{{ url_for('search_port_list_nas') }}" id="nas-dumps">
+            <img src="{{ url_for('static', filename='img/search_port/list.png') }}{{ static_ver }}">
+            Список NAS-dumps
+        </a>
+    </div>
+    <div class="separator"></div>
+    <div class="left-panel-a-container">
+        <a href="{{ url_for('search_port_recv_dump') }}" id="add-dump">
+            <img src="{{ url_for('static', filename='img/search_port/plus.png') }}{{ static_ver }}">
+            Снять DUMP
+        </a>
+    </div>
+</div>

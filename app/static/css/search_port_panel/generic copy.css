@@ -1,0 +1,276 @@
+body {
+    margin: 0px;
+    background-color: rgb(233, 232, 232);
+}
+
+.main-div {
+    max-width: 1200px;
+    height: 8500px;
+    margin-top: 70px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.label-container {
+    background-color: rgb(22,197,224);
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    height: 50px;
+    line-height: 50px;
+    box-shadow: 1px 1px 6px -2px rgba(34, 60, 80, 0.6) inset;
+
+}
+
+.content-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.left-panel-container {
+    width: 25%;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.right-panel-container {
+    width: 75%;
+    margin: 10px;
+
+}
+
+.right-label {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 25px;
+    height: 40px;
+    line-height: 40px;
+    margin-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border-bottom: 1px silver solid;
+}
+
+.left-panel-button {
+    display: none;
+    top: 130px;
+    left: 10px;
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: white;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    box-shadow: 6px 8px 26px -6px rgba(34, 60, 80, 0.73);
+}
+
+.left-panel-button img {
+    margin-top: 12px;
+}
+
+
+.base-button {
+	box-shadow:inset 0px 1px 0px 0px #54a3f7;
+	background:linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+	background-color:#007dc1;
+	border-radius:3px;
+	border:1px solid #124d77;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size:13px;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #154682;
+}
+.base-button:hover {
+	background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+	background-color:#0061a7;
+}
+.base-button:active {
+	position:relative;
+	top:1px;
+}
+
+.base-input {
+    font-size: 15px;
+    height: 20px;
+    width: 100%;
+    margin-left: 10px;
+    border: 1px rgb(150, 150, 150) solid;
+    border-radius: 3px;
+    box-shadow: 0px 5px 6px -5px rgba(34, 60, 80, 0.2) inset;
+}
+
+.base-input:focus {
+    outline: none;
+    border: 1px rgb(22, 173, 184) solid;
+}
+
+.action-panel {
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15px;
+}
+
+.window-div {
+    background-color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 1px silver solid;
+    overflow: hidden;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+
+}
+
+.window-label {
+    background-color: rgb(235, 235, 235);
+    border-bottom: 1px silver solid;
+    text-align: center;
+    width: 100%;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+
+}
+
+.window-middle {
+    width: 80%;
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.window-buttons {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+}
+
+.window-icon {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+.loader {
+    width: 60px;
+    height: 40px;
+    position: relative;
+    display: inline-block;
+    --base-color: #ffffff; /*use your base color*/
+  }
+  .loader::before {
+    content: '';  
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #6e6e6e;
+    background-image: radial-gradient(circle 8px at 18px 18px, var(--base-color) 100%, transparent 0), radial-gradient(circle 4px at 18px 0px, var(--base-color) 100%, transparent 0), radial-gradient(circle 4px at 0px 18px, var(--base-color) 100%, transparent 0), radial-gradient(circle 4px at 36px 18px, var(--base-color) 100%, transparent 0), radial-gradient(circle 4px at 18px 36px, var(--base-color) 100%, transparent 0), radial-gradient(circle 4px at 30px 5px, var(--base-color) 100%, transparent 0), radial-gradient(circle 4px at 30px 5px, var(--base-color) 100%, transparent 0), radial-gradient(circle 4px at 30px 30px, var(--base-color) 100%, transparent 0), radial-gradient(circle 4px at 5px 30px, var(--base-color) 100%, transparent 0), radial-gradient(circle 4px at 5px 5px, var(--base-color) 100%, transparent 0);
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    animation: rotationBack 3s linear infinite;
+  }
+  .loader::after {
+    content: '';  
+    left: 35px;
+    top: 15px;
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #6e6e6e;
+    background-image: radial-gradient(circle 5px at 12px 12px, var(--base-color) 100%, transparent 0), radial-gradient(circle 2.5px at 12px 0px, var(--base-color) 100%, transparent 0), radial-gradient(circle 2.5px at 0px 12px, var(--base-color) 100%, transparent 0), radial-gradient(circle 2.5px at 24px 12px, var(--base-color) 100%, transparent 0), radial-gradient(circle 2.5px at 12px 24px, var(--base-color) 100%, transparent 0), radial-gradient(circle 2.5px at 20px 3px, var(--base-color) 100%, transparent 0), radial-gradient(circle 2.5px at 20px 3px, var(--base-color) 100%, transparent 0), radial-gradient(circle 2.5px at 20px 20px, var(--base-color) 100%, transparent 0), radial-gradient(circle 2.5px at 3px 20px, var(--base-color) 100%, transparent 0), radial-gradient(circle 2.5px at 3px 3px, var(--base-color) 100%, transparent 0);
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    animation: rotationBack 4s linear infinite reverse;
+  }
+  @keyframes rotationBack {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+
+
+.nas-list-node {
+    display: block;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    border-left: 3px #007dc1 solid;
+    font-size: 14px;
+    color: rgb(139, 139, 139);
+    background-color: white;
+    overflow: hidden;
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.sw-container {
+    display: none;
+    width: 95%;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.nas-node-info {
+    display: flex;
+    width: 100%;
+    height: 48px;
+}
+
+.img-icon {
+    margin-left: 10px;
+}
+
+.img-tree {
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
+    margin-top: 16px;
+    cursor: pointer;
+}
+
+.rotate {
+    transform: rotate(270deg);
+}
+
+.div-in-nas-node {
+    margin-left: 10px;
+    line-height: 48px;
+}
+
+.div-in-nas-node label {
+    color: black;
+    vertical-align: middle;
+}
+
+.div-in-nas-node span {
+    color: black;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
+
+
+

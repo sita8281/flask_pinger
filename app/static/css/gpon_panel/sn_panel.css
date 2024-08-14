@@ -1,0 +1,83 @@
+.sn-main-div {
+    min-height: 750px;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.sn-gpon {
+    position: relative;
+    left: 300px;
+    top: 200px;
+    width: 300px;
+    background-color: rgb(243, 243, 243);
+    text-align: center;
+    border: 1px rgb(124, 124, 124) solid;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    overflow: hidden;
+}
+
+.sn-gpon label {
+    display: block;
+    background-color: rgb(231, 231, 231);
+    width: 100%;
+    font-size: 18px;
+    border-bottom: 1px silver solid;
+}
+
+.sn-gpon div {
+    padding: 10px;
+}
+
+button {
+    border-radius: 3px;
+    background-color: #0176bc;
+    border: 1px #0f5c84 solid;
+    color: white;
+    font-size: 15px;
+    height: 30px;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #005f96;
+    border: 1px rgb(0, 57, 95) solid;
+}
+
+
+#choise-gpon {
+    display: block;
+}
+
+#searching-gpon {
+    display: none;
+}
+
+#log {
+    resize: none;
+    border: 1px silver solid;
+    width: 270px;
+}
+
+#log:focus {
+    outline: none;
+}
+
+#success {
+    display: none;
+    width: 320px;
+}
+
+#success div {
+    padding: 5px;
+}
+
+#not-found {
+    display: none;
+}
+
+
+
+
+

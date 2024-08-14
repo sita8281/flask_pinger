@@ -1,0 +1,547 @@
+
+<style>
+    .info-div {
+        width: 600px;
+        text-align: center;
+        padding: 2px;
+    }
+    .info-div img {
+        width: 120px;
+        height: 120px;
+        margin-top: 200px;
+    }
+
+    table {
+        margin-top: 20px;
+        text-align: left;
+        border: 1px solid;
+        border-spacing: 5px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    table td {
+        background-color: rgb(255, 255, 255);
+    }
+
+    .offline-ont {
+        color: brown;
+        font-weight: bold;
+    }
+
+    .online-ont {
+        color: rgb(34, 131, 14);
+        font-weight: bold;
+    }
+
+    .high-signal {
+        background-color: greenyellow;
+    }
+
+    .middle-signal {
+        background-color: yellow;
+    }
+
+    .low-signal {
+        background-color: brown;
+        color: white;
+    }
+
+    .no-signal {
+        background-color: darkgrey;
+    }
+
+    .buttons__info {
+        display: flex;
+        margin-top: 10px;
+    }
+
+    .buttons__info button {
+        text-align: center;
+        width: 120px;
+        height: 100px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 10px;
+        border: 1px solid brown;
+        box-shadow: 7px 7px 8px -1px rgba(0, 0, 0, 0.17);
+        display: block;
+        background-color: aliceblue;
+        margin-left: 10px;
+    }
+    .buttons__info img {
+        height: 48px;
+        width: 48px;
+        margin-top: 0px;
+        
+    }
+
+    .buttons__info button:hover, label:hover {
+        background-color: rgb(209, 227, 255);
+        cursor: pointer;
+    }
+    
+
+    .buttons__info label {
+        display: block;
+    }
+
+    .optical__ping {
+        position: block;
+        margin-top: 10px;
+        margin-left: 150px;
+        width: 600px;
+        height: 760px;
+        background-color: white;
+        border: 1px solid;
+    }
+
+    .search__mac {
+        position: block;
+        margin-top: 200px;
+        margin-left: 150px;
+        width: 600px;
+        height: 400px;
+        background-color: white;
+        border: 1px solid;
+    }
+
+    .optical__ping__label {
+        text-align: center;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        background: linear-gradient(0deg, rgba(0,0,0,1) 12%, rgba(62,62,62,1) 47%, rgba(164,164,164,1) 92%);
+    }
+
+    .optical__table {
+        overflow-y: scroll;
+        max-height: 680px;
+        height: 100%;
+    }
+
+    .optical__ping table {
+        text-align: center;
+        width: 100%;
+        border: none;
+        border-spacing: 1px;
+        
+    }
+
+    .optical__ping table th {
+        background-color: aliceblue;
+        height: 30px;
+    }
+
+    .tr__online td {
+        background-color: greenyellow;
+    }
+
+    .tr__offline td {
+        background-color: brown;
+        color: rgb(255, 255, 255);
+    }
+
+    .btn__div {
+        width: 100%;
+
+    }
+
+    .btn__div button {
+        display: flex;
+        margin-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+</style>
+
+
+<div class="info-div">
+    <div>
+        <img src="{{ url_for('static', filename='img/gpon/loading.gif') }}{{ static_ver }}" alt="">
+    </div>
+    <span>Загрузка информации..</span>
+</div>
+
+
+<style>
+    .delete__onu {
+        top: 0px;
+        left: 0px;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.199);
+    }
+
+    .delete__onu__window {
+        width: 300px;
+        height: 150px;
+        background-color: aliceblue;
+        padding: 1px;
+        border: 1px solid;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 200px;
+    }
+
+    .delete__onu__window label {
+        background-color: rgb(0, 106, 177);
+        color: white;
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+
+    .delete__onu__window div {
+        margin-top: 20px;
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+
+    .delete__onu__window div button {
+        width: 100px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    #del-question {
+        display: none;
+    }
+
+    #del-loading {
+        display: none;
+    }
+
+    #del-success {
+        display: none;
+    }
+
+    #del-error {
+        display: none;
+    }
+</style>
+
+<div class="delete__onu" id="del-question">
+    <div class="delete__onu__window">
+        <label>Удаление ONT</label>
+        <div>Вы действительно хотите удалить данную ONT?</div>
+        <div>
+            <button onclick="runDeleteOnt()">Да</button>
+            <button onclick="closeAllWindows()">Нет</button>
+        </div>
+    </div>
+</div>
+
+<div class="delete__onu" id="del-loading">
+    <div class="delete__onu__window">
+        <label>Удаление ONT</label>
+        <img src="{{ url_for('static', filename='img/gpon/loading.gif') }}{{ static_ver }}">
+    </div>
+</div>
+
+<div class="delete__onu" id="del-success">
+    <div class="delete__onu__window">
+        <label><img src="{{ url_for('static', filename='img/gpon/good.png') }}{{ static_ver }}">Успешно</label>
+        <div>Удаление ONT успешно завершено</div>
+        <div><button onclick="closeAllWindows()">Закрыть</button></div>
+    </div>
+</div>
+
+
+<div class="delete__onu" id="del-error">
+    <div class="delete__onu__window">
+        <label><img src="{{ url_for('static', filename='img/gpon/warning16.png') }}{{ static_ver }}">Ошибка</label>
+        <div id="data-error">Не удалось удалить ONT (повторите попытку через некоторое время)</div>
+        <div><button onclick="closeAllWindows()">Закрыть</button></div>
+    </div>
+</div>
+
+
+<script>
+    {
+        let dataLst = [];
+        let interuptLoops = false;
+
+        // при завершении загрузки вызвается
+        function termLoading(data, arrIndex) {
+            if (arrIndex == 0) {
+                dataLst.push(data)
+            } else {
+                dataLst.unshift(data)
+            }
+
+            if (dataLst.length == 2) {
+
+                $('.info-div').html('<table></table>');
+
+                for (let i=0; i < dataLst.length; i++) {
+                    for (key in dataLst[i]) {
+                        if (dataLst[i][key] == 'offline') {
+                            $(`<tr><td>${key}</td><td class='offline-ont'>${dataLst[i][key]}</td></tr>`).appendTo('table');
+                            continue
+                        } else if (dataLst[i][key] == 'online') {
+                            $(`<tr><td>${key}</td><td class='online-ont'>${dataLst[i][key]}</td></tr>`).appendTo('table');
+                            continue
+                        }
+                        if (key == 'Rx optical power(dBm)') {
+                            let signal = Number(dataLst[i][key]);
+                            console.log(signal);
+                            if (signal == 0) {
+                                $(`<tr><td>${key}</td><td class='no-signal'>${dataLst[i][key]}</td></tr>`).appendTo('table');
+                            } else if (-27  <= signal) {
+                                $(`<tr><td>${key}</td><td class='high-signal'>${dataLst[i][key]}</td></tr>`).appendTo('table');  
+                            } else if (-30 <= signal && signal <= -27.01) {
+                                $(`<tr><td>${key}</td><td class='middle-signal'>${dataLst[i][key]}</td></tr>`).appendTo('table');
+                            } else {
+                                $(`<tr><td>${key}</td><td class='low-signal'>${dataLst[i][key]}</td></tr>`).appendTo('table');
+                            }
+                        } else {
+                            $(`<tr><td>${key}</td><td>${dataLst[i][key]}</td></tr>`).appendTo('table');
+                        }
+                        
+                        
+                    }
+                }
+
+                // добаление кнопок после информации
+                let btns_html = `
+                <div class="buttons__info" >
+                    <button id='deleteONT' onclick=openDeleteQuestion()>
+                        <img src="{{ url_for('static', filename='img/gpon/delete.png') }}{{ static_ver }}">
+                        <label href="">Удалить ONT</label>
+                    </button>
+
+                    <button id='opticalPING' onclick=openWinOpticalPing()>
+                        <img src="{{ url_for('static', filename='img/gpon/ping.png') }}{{ static_ver }}">
+                        <label href="">Оптический пинг</label>
+                    </button>
+
+                    <button id='searchMAC' onclick=openWinSearchMac()>
+                        <img src="{{ url_for('static', filename='img/gpon/mac.png') }}{{ static_ver }}">
+                        <label href="">Найти логин и MAC</label>
+                    </button>
+                </div>
+                `
+                $(btns_html).appendTo('.info-div');
+
+            }
+                
+        }
+
+        // заблокировать фон
+        function blockBackground() {
+            $('<div class="window__div"></div>').appendTo('body');
+            interuptLoops = false;
+        }
+
+        // разблокировать фон через 1.5 сек
+        function unblockBackground() {
+            setTimeout(function() {
+                $('.window__div').remove();
+            }, 1500)
+            
+            interuptLoops = true;
+        }
+
+        // открыть окно поиска MAC и логина
+        function openWinSearchMac() {
+            let window_html = `
+            <div class="optical__ping">
+                <div class="optical__ping__label">Search MAC</div>
+                <div class='optical__table'>
+                    <table id="search-table">
+                        <tr>
+                            <th></th>
+                            <th>MAC Address</th>
+                            <th>Login</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="btn__div">
+                    <button onclick=closeSearchMac()>Вернуться к информации</button>
+                </div>
+            </div>
+            `
+            $("#main-info").css("display", "none");
+            $(".tree__div").css("display", "none");
+            $(window_html).appendTo('.content__div');
+            $(".optical__ping").css("display", "absolute");
+            appendMac();
+        }
+
+        // закрыть окно поиска MAC и вернуть основные окна
+        function closeSearchMac() {
+            $(".optical__ping").remove();
+            $("#main-info").css("display", "block");
+            $(".tree__div").css("display", "block");
+        }
+
+        // получить MAC от сервера и добавить
+        function appendMac() {
+            $.ajax({
+                type: "post",
+                url: "/gpon_panel/mac_onu/",
+                data: {'gpon': '{{ args[0] }}', 'slot': '{{ args[1] }}', 'port': '{{ args[2] }}', 'onu_id': '{{ args[3] }}'},
+                dataType: "json",
+                timeout: 5000,
+                success: function (response) {
+                    $.each(response, function (indexInArray, valueOfElement) { 
+                         $(`<tr><td><img src="{{ url_for('static', filename='img/gpon/user_carbon.png') }}{{ static_ver }}"></td><td>${valueOfElement[0]}</td><td>${valueOfElement[1]}</td></tr>`).appendTo('#search-table');
+                    });
+                }
+            });
+        }
+
+        // открыть окно Оптического пинга
+        function openWinOpticalPing() {
+            //blockBackground();
+            let window_html = `
+            <div class="optical__ping">
+                <div class="optical__ping__label">Оптический пинг</div>
+                <div class='optical__table'>
+                    <table>
+                        <tr>
+                            <th>ID запроса</th>
+                            <th>Название ONT</th>
+                            <th>Сигнал ONT</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="btn__div">
+                    <button onclick=backToInfo()>Вернуться к информации</button>
+                </div>
+            </div>
+            `
+            $("#main-info").css("display", "none");
+            $(".tree__div").css("display", "none");
+            $(window_html).appendTo('.content__div');
+            $(".optical__ping").css("display", "absolute");
+            interuptLoops = false;
+            appendOpticalPing();
+        }
+
+        // перевод флага для завершения цикла пинга ONT
+        function backToInfo() {
+            interuptLoops = true;
+            //$(".optical__ping").css("display", "none");
+            
+        }
+
+        // добавление ONT пинга в цикле
+        let count_ping = 0;
+        function appendOpticalPing() {
+
+            // проверка флага прерывания
+            if (interuptLoops) {
+                count_ping = 0;
+                $(".optical__ping").remove();
+                $("#main-info").css("display", "block");
+                $(".tree__div").css("display", "block");
+                return;
+            }
+
+            $.ajax({
+                type: "post",
+                url: "{{ url_for('optical_ping') }}",
+                data: {'gpon': '{{ args[0] }}', 'slot': '{{ args[1] }}', 'port': '{{ args[2] }}', 'onu_id': '{{ args[3] }}'},
+                dataType: "json",
+                timeout: 5000,
+                success: function (response) {
+                    let nameOnt = dataLst[0]['Description']
+                    if (response == 'offline') {
+                        $(`<tr id=tr-id-${count_ping} class="tr__offline"><td>${count_ping}</td><td>${nameOnt}</td><td>${response}</td></tr>`).appendTo('.optical__ping table');
+                    } else {
+                        $(`<tr id=tr-id-${count_ping} class="tr__online"><td>${count_ping}</td><td>${nameOnt}</td><td>${response}</td></tr>`).appendTo('.optical__ping table');
+                    }
+        
+                    let hiddenElement = document.getElementById("tr-id-" + count_ping);
+                    hiddenElement.scrollIntoView({ block: "center", behavior: "smooth" });
+                    count_ping++;
+                    appendOpticalPing();
+                    
+                },
+                error: function (err) {
+                    let nameOnt = dataLst[0]['Description']
+                    $(`<tr><td id=tr-id-${count_ping}>${count_ping}</td><td>${nameOnt}</td><td>Ошибка</td></tr>`).appendTo('.optical__ping table');
+
+                    let hiddenElement = document.getElementById("tr-id-" + count_ping);
+                    hiddenElement.scrollIntoView({ block: "center", behavior: "smooth" });
+                    count_ping++;
+
+                    setTimeout(appendOpticalPing, 3000);
+                }
+            });
+        }
+
+        // открыть окно вопроса об удалении ONT
+        function openDeleteQuestion() {
+            $('#del-question').css('display', 'block');
+        }
+
+        // запустить удаление ONT
+        function runDeleteOnt() {
+            closeAllWindows();
+            $('#del-loading').css('display', 'block');
+            $.ajax({
+                type: "post",
+                url: "/gpon_panel/delete/",
+                data: {
+                    gpon: '{{ args[0] }}',
+                    slot: '{{ args[1] }}',
+                    port: '{{ args[2] }}',
+                    onu_id: '{{ args[3] }}',
+                },
+                dataType: "json",
+                success: function (response) {
+                    if ('success' in response) {
+                        closeAllWindows();
+                        $('#del-success').css('display', 'block')
+                        return;
+                    }
+                    closeAllWindows();
+                    $('#del-error').css('display', 'block')
+                },
+                error: function (err) {
+                    closeAllWindows();
+                    $('#data-error').text('Сервер не отвечает, или плохое соединие')
+                    $('#del-error').css('display', 'block')
+                }
+            });
+        }
+
+        // закрыть все всплывающие окна
+        function closeAllWindows() {
+            $('#del-question').css('display', 'none')
+            $('#del-loading').css('display', 'none')
+            $('#del-error').css('display', 'none')
+            $('#del-success').css('display', 'none')
+        }
+
+        // при загрузке этого html запускается подгрузка информации ONT
+        $.ajax({
+            type: "post",
+            url: "{{ url_for('onu_optical_info') }}",
+            data: {'gpon': '{{ args[0] }}', 'slot': '{{ args[1] }}', 'port': '{{ args[2] }}', 'iid': '{{ args[3] }}'},
+            dataType: "json",
+            success: function (response) {
+                termLoading(response, 0);
+            }
+        });
+
+        $.ajax({
+            type: "post",
+            url: "{{ url_for('onu_info') }}",
+            data: {'gpon': '{{ args[0] }}', 'slot': '{{ args[1] }}', 'port': '{{ args[2] }}', 'iid': '{{ args[3] }}'},
+            dataType: "json",
+            success: function (response) {
+                termLoading(response, 1);
+            }
+        });
+        
+    }
+    
+</script>

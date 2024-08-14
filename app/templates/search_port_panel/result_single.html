@@ -1,0 +1,95 @@
+<!-- Этот шаблон не предназначен для загрузки из браузера,
+данный кусок HTML подгружается через AJAX -->
+
+
+<style>
+    .result-list-container {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .label-result-div {
+        border-bottom: 1px silver solid;
+        font-size: 20px;
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+
+    .label-data {
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    .sw-port {
+        margin-top: 15px;
+        border-left: 3px blue solid;
+        margin-right: 10px;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+        overflow: hidden;
+        padding: 10px;
+    }
+
+    .node-info-label {
+        font-weight: bold;
+        font-size: 15px;
+        color: rgb(90, 90, 90)
+    }
+</style>
+
+<script>
+
+</script>
+
+
+<div class="result-list-container">
+    <div class="label-result-div">
+        <label>Результат поиска в последней (свежей) записи</label>
+    </div>
+    <div style="margin-top: 10px;">
+        <label class="label-data">Логин:</label>
+        <span>{{ result[0]['login'] }}</span>
+    </div>
+        
+    <div>
+        <label class="label-data">MAC:</label>
+        <span>{{ result[0]['mac'] }}</span>
+    </div>
+
+    <div>
+        <label class="label-data">Дата записи NAS (PPPoE):</label>
+        <span>{{ result[0]['date'] }}</span>
+    </div>
+
+    {% if result[0]['sw_dumps'] %}
+        <div>
+            <label class="label-data">Дата записи SW (коммутаторов):</label>
+            <span>{{ result[0]['sw_dumps'][0]['date'] }}</span>
+        </div>
+
+        {% for sw in result[0]['sw_dumps'][0]['sw_list'] %}
+            <div class="sw-port">
+                <div class="node-info-div">
+                    <label class="node-info-label">Порт:</label>
+                    <span class="node-info-data">{{ sw['port'] }}</span>
+                    
+                </div>
+                <div class="node-info-div">
+                    <label class="node-info-label">Название:</label>
+                    <span class="node-info-data">{{ sw['name'] }}</span>
+                    
+                </div>
+                <div class="node-info-div">
+                    <label class="node-info-label">IP:</label>
+                    <a target="_blank" href="http://{{ sw['host'] }}">{{ sw['host'] }}</a>
+                    
+                </div>
+
+                <div class="node-info-div">
+                    <label class="node-info-label">ProxyVPN:</label>
+                    <a target="_blank" href="{{ url_for('forward_gateway_open', ip=sw.host, port=80) }}">Открыть</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+</div>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <caption><b>Список пользователей</b></caption>
+    <thead>
+        <tr>
+            <th>Username</th> <th>Carbon_login</th> <th>Уровень прав</th> <th>Последнее посещение</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in user_lst %}
+            <tr>
+                <td>{{ user.login }}</td> <td>{{ user.carbon_login }}</td> <td>{{ user.privilege }}</td> <td>{{ user.last_visit }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    <form action="" method="post">
+    <p>
+        {{ form.username.label() }}
+        {{ form.username() }}
+    </p>
+    <p>
+        {{ form.password.label() }}
+        {{ form.password() }}
+    </p>
+    <p>
+        {{ form.carbon_login.label() }}
+        {{ form.carbon_login() }}
+    </p>
+    <p>
+        {{ form.carbon_passw.label() }}
+        {{ form.carbon_passw() }}
+    </p>
+    <p>
+        {{ form.privilege.label() }}
+        {{ form.privilege() }}
+    </p>
+    <p>
+        {{ form.submit() }}
+    </p>
+    </form>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gpon_panel/generic.css') }}{{ static_ver }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gpon_panel/signals_panel.css') }}{{ static_ver }}">
+    <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}{{ static_ver }}"></script>
+
+    <title>Gpon Panel</title>
+
+    <style>
+        #signal_table_ont {
+            background-color: rgb(144, 203, 255);
+            border-radius: 5px;
+        } 
+    </style>
+</head>
+`   
+{% include 'header.html' %}
+<body>
+
+    <!-- место под всплывающие окна -->
+    <div class="place__window"></div>
+
+    <div class="main__div">
+
+        <div class="label__div">GPON Interface</div>
+
+        <div class="content__div">
+
+            {% include 'gpon_panel/left_panel.html' %}
+            
+            <div class="signals-main-div">
+
+                <div class="choise-gpon" id="choise-gpon-block">
+                    <label>
+                        Выберите GPON-блок
+                    </label>
+                    <div>
+                        <button onclick="openGarageForm()">Гараж</button>
+                        <button onclick="openEtagForm()">Пятиэтажка</button>
+                    </div>
+                </div>
+
+                <div class="choise-gpon" id="garage-form">
+                    <label>Выберите слот и порт (Гараж)</label>
+                    <div>
+                        <div>
+                            Слот <select id="slot">
+                                <option value="0/0">Слот 0/0</option>
+                                <option value="0/1">Слот 0/1</option>
+                            </select>
+                        </div>
+                        <div>
+                            Порт <select id="port">
+                                <option value="0">Порт 0</option>
+                                <option value="1">Порт 1</option>
+                                <option value="2">Порт 2</option>
+                                <option value="3">Порт 3</option>
+                                <option value="4">Порт 4</option>
+                                <option value="5">Порт 5</option>
+                                <option value="6">Порт 6</option>
+                                <option value="7">Порт 7</option>
+                            </select>
+                        </div>
+                        <div>
+                            Вывод дистанций <input id="distance" type="checkbox">
+                        </div>  
+                        <div style="font-size: 15px;">
+                            <img src="{{ url_for('static', filename='img/gpon/warning16.png') }}{{ static_ver }}" alt="">
+                            Вывод дистаций замедляет алгоритм в два раза
+                        </div>
+                            
+                            
+                        
+                        <button onclick="submitFormGarage()">Продолжить</button>
+                    </div>
+                </div>
+
+                <div class="choise-gpon" id="etag-form">
+                    <label>Выберите слот и порт (Пятиэтажка)</label>
+                    <div>
+                        <div>
+                            Слот <select id="slot">
+                                <option value="0/1">Слот 0/1</option>
+                            </select>
+                        </div>
+                        <div>
+                            Порт <select id="port">
+                                <option value="0">Порт 0</option>
+                                <option value="1">Порт 1</option>
+                                <option value="2">Порт 2</option>
+                                <option value="3">Порт 3</option>
+                                <option value="4">Порт 4</option>
+                                <option value="5">Порт 5</option>
+                                <option value="6">Порт 6</option>
+                                <option value="7">Порт 7</option>
+                                <option value="8">Порт 8</option>
+                                <option value="9">Порт 9</option>
+                                <option value="10">Порт 10</option>
+                                <option value="11">Порт 11</option>
+                                <option value="12">Порт 12</option>
+                                <option value="13">Порт 13</option>
+                                <option value="14">Порт 14</option>
+                                <option value="15">Порт 15</option>
+                            </select>
+                        </div>
+                        <div>
+                            Вывод дистанций <input id="distance" type="checkbox">
+                        </div>  
+                        <div style="font-size: 15px;">
+                            <img src="{{ url_for('static', filename='img/gpon/warning16.png') }}{{ static_ver }}" alt="">
+                            Вывод дистаций замедляет алгоритм в два раза
+                        </div>
+                            
+                        <button onclick="submitFormEtag()">Продолжить</button>
+                    </div>
+                </div>
+                
+                <div class="choise-gpon" id="div-table">
+                    <label>Список сигналов ONT</label>
+                    <div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rx Optical Power</th>
+                                    <th>Distance</th>
+                                    <th>Name</th>
+                                    <th>SN</th>
+                                    <th>Slot</th>
+                                    <th>Port</th>
+                                    <th>ONT ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        
+        </div>
+    </div>
+
+</body>
+
+<script>
+
+    let listONU = [];
+    let listTR = [];
+    let distance = false;
+
+    function openEtagForm() {
+        $('#choise-gpon-block').css('display', 'none')
+        $('#etag-form').css('display', 'block')
+    }
+
+    function openGarageForm() {
+        $('#choise-gpon-block').css('display', 'none')
+        $('#garage-form').css('display', 'block')
+    }
+
+    function submitFormEtag() {
+        $('#etag-form').css('display', 'none')
+        $('#garage-form').remove()
+        submitForm('etag');
+    }
+
+    function submitFormGarage() {
+        $('#garage-form').css('display', 'none')
+        $('#etag-form').remove()
+        submitForm('garage');
+    }
+
+    function submitForm(gpon) {
+        let slot = $('#slot').val()
+        let port = $('#port').val()
+        distance = $('#distance').is(':checked')
+
+        $.ajax({
+            type: "post",
+            url: "/gpon_panel/onu_list/",
+            data: {gpon: gpon, slot: slot, port: port},
+            dataType: "json",
+            success: function (response) {
+                $.each(response, function (indexInArray, valueOfElement) { 
+                    let content = `
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>${valueOfElement['name']}</td>
+                        <td>${valueOfElement['sn']}</td>
+                        <td>${valueOfElement['slot']}</td>
+                        <td>${valueOfElement['port']}</td>
+                        <td>${valueOfElement['id']}</td>
+                    </tr>
+                    `
+                    $(content).appendTo('#div-table table tbody');
+                });
+                $('#div-table').css('display', 'block')
+
+                listONU = response
+                console.log(listONU);
+                listTR = $('#div-table table tbody tr')
+                appendSignals(0);
+                
+                if (distance) {
+                    appendDistance(0);
+                }     
+            }
+        }); 
+    }
+
+    function appendSignals(index) {
+
+        if (listONU.length == index) {
+            return;
+        }
+
+        let onu = listONU[index];
+
+        $.ajax({
+            type: "post",
+            url: "/gpon_panel/ping/",
+            data: {gpon: onu['gpon'], slot: onu['slot'], port: onu['port'], onu_id: onu['id']},
+            dataType: "json",
+            timeout: 5000,
+            success: function (response) {
+                
+                td = listTR[index].children[0]
+
+                if (response == 'offline') {
+                    td.style.backgroundColor = 'silver';
+                } else {
+
+                    signal = Number(response);
+                    if (!signal) {
+                        signal = 0;
+                    }
+
+                    if (signal >= -27) {
+                        td.style.backgroundColor = '#00FF00';
+                    } else if (signal >= -30 && signal <= -27.01) {
+                        td.style.backgroundColor = 'yellow';
+                    } else {
+                        td.style.backgroundColor = 'red';
+                        td.style.color = 'white';
+                    }
+                }
+
+                td.textContent = response
+
+                index++
+                appendSignals(index);
+            }
+        });
+    }
+
+    function appendDistance(index) {
+
+        if (listONU.length == index) {
+            return;
+        }
+
+        let onu = listONU[index];
+
+        $.ajax({
+            type: "post",
+            url: "/gpon_panel/onu_info/",
+            data: {gpon: onu['gpon'], slot: onu['slot'], port: onu['port'], iid: onu['id']},
+            dataType: "json",
+            timeout: 5000,
+            success: function (response) {
+                
+                td = listTR[index].children[1]
+                td.textContent = response['ONT distance(m)']
+
+                index++
+                appendDistance(index);
+            }
+        });
+    }
+ 
+
+</script>
+
+</html>

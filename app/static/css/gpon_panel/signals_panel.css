@@ -1,0 +1,93 @@
+.signals-main-div {
+    min-height: 750px;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.choise-gpon {
+    position: relative;
+    left: 300px;
+    top: 200px;
+    width: 300px;
+    background-color: rgb(243, 243, 243);
+    text-align: center;
+    border: 1px rgb(124, 124, 124) solid;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    overflow: hidden;
+}
+
+.choise-gpon label {
+    display: block;
+    background-color: rgb(231, 231, 231);
+    width: 100%;
+    font-size: 18px;
+    border-bottom: 1px silver solid;
+}
+
+.choise-gpon div {
+    padding: 10px;
+}
+
+button {
+    border-radius: 3px;
+    background-color: #0176bc;
+    border: 1px #0f5c84 solid;
+    color: white;
+    font-size: 15px;
+    height: 30px;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #005f96;
+    border: 1px rgb(0, 57, 95) solid;
+}
+
+.signal-list {
+    background-color: #0176bc;
+    width: 900px;
+    height: 730px;
+}
+
+/* ----------------------------------------------- */
+
+#choise-gpon-block {
+    display: block;
+}
+
+#garage-form {
+    display: none;
+}
+
+#etag-form {
+    display: none;
+}
+
+#div-table {
+    display: none;
+    width: 850px;
+    left: 20px;
+    top: 20px;
+
+}
+#div-table div {
+    height: 650px;
+    overflow-y: scroll;
+}
+
+#div-table table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#div-table table tbody td{
+    text-align: left;
+    border: 1px silver solid ;
+}
+
+
+
+
+

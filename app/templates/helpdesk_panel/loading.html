@@ -1,0 +1,61 @@
+<style>
+    .loader {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px;
+    border: 20px solid #EAF0F6;
+    border-radius: 50%;
+    border-top: 20px solid #5980ff;
+    width: 100px;
+    height: 100px;
+    animation: spinner 1s linear infinite;
+  }
+  
+  @keyframes spinner {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .a-loader-text {
+    width: 100%;
+    font-size: 30px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    margin-left: auto;
+    display: block;
+  }
+
+  .a-loader-text-2 {
+    width: 100%;
+    font-size: 15px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    margin-left: auto;
+    display: block;
+  }
+
+  .loading-div {
+    width: 100%;
+    align-items: center;
+  }
+  .loading-div-2 {
+    width: 100%;
+  }
+  .l-div-1 {
+    width: 100%;
+  }
+  
+</style>
+
+<div class="l-div-1">
+    <div class="loading-div">
+        <div class="loader"></div>
+        
+    </div>
+
+    <div class="loading-div-2">
+        <a class="a-loader-text">Загрузка..</a>
+        <a class="a-loader-text-2">Ожидание ответа от Billing-сервера</a>
+        <a class="a-loader-text-2">192.168.255.100</a>
+    </div>
+</div>

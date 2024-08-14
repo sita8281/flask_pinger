@@ -1,0 +1,8 @@
+
+{% for user in users %}
+
+    <a class="a-users" href="javascript:showHelpdeskForm({{ user[2] }});" style="display: block;">
+        <img src="../images/users16.png{{ static_ver }}" alt=""> {{ user[1] }} &lt{{ user[0] }}&gt
+    </a>
+
+{% endfor %}

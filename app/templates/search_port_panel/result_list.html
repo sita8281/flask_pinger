@@ -1,0 +1,178 @@
+<!-- Этот шаблон не предназначен для загрузки из браузера,
+данный кусок HTML подгружается через AJAX -->
+
+
+<style>
+    .result-list-container {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .nas-node {
+        margin-top: 15px;
+        border-left: 3px blue solid;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+        overflow: hidden;
+    }
+
+    .nas-node-info {
+        display: flex;
+    }
+
+    .nas-node-info div {
+        max-height: 48px;
+        height: 100%;
+    }
+
+    .node-info-label {
+        font-weight: bold;
+        margin-left: 10px;
+    }
+
+    .node-info-data {
+    }
+
+    .node-triangle {
+        margin-top: 18px;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+    .rotator {
+        transform: rotate(270deg);
+    }
+
+    .node-info-div {
+        margin-top: 12px;
+    }
+
+    .node-img {
+        margin-left: 5px;
+        cursor: pointer;
+    }
+
+    .nas-node-container-sw {
+        margin-left: 15px;
+    }
+
+    .sw-node {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        margin-right: 10px;
+        border-left: 3px rgb(255, 94, 0) solid;
+        box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+        background-color: rgb(255, 246, 231);
+        padding-bottom: 10px;
+    }
+
+
+    .sw-node-info {
+        display: flex;
+    }
+
+    .sw-node-container-sw {
+        margin-left: 15px;
+    }
+
+    .sw-port {
+        margin-top: 15px;
+        border-left: 3px rgb(15, 163, 1) solid;
+        border-right: 1px rgb(15, 163, 1) solid;
+        border-top: 1px rgb(15, 163, 1) solid;
+        border-bottom: 1px rgb(15, 163, 1) solid;
+        background-color: rgb(230, 255, 192);
+        margin-right: 10px;
+    }
+
+    @media (max-width: 900px) {
+
+    }
+    @media (max-width: 600px) {
+        .nas-node-info {
+
+        }
+        .node-info-label {
+            font-weight: bold;
+            margin-left: 10px;
+            font-size: 14px;
+        }
+
+        .node-info-data {
+            font-size: 12px;
+        }
+        .node-info-div {
+            margin-top: 5px;
+    }       
+    }
+</style>
+
+<script>
+    function openChildContainer(id) {
+        $("#" + id).slideToggle();
+    }
+
+</script>
+
+
+<div class="result-list-container">
+    {% for nas_dump in result %}
+        <div class="nas-node">
+            <div class="nas-node-info">
+                <div class="node-img"><img onclick=openChildContainer("nas__{{ nas_dump['id'] }}") src="/static/img/search_port/nas_folder.png{{ static_ver }}"></div>
+                <div class="node-info-div">
+                    <label class="node-info-label">Дата:</label>
+                    <label class="node-info-data" >{{ nas_dump['date'] }}</label>
+                </div >
+                <div class="node-info-div">
+                    <label class="node-info-label">Логин:</label>
+                    <label class="node-info-data" >{{ nas_dump['login'] }}</label>
+                </div>
+                <div class="node-info-div">
+                    <label class="node-info-label">MAC:</label>
+                    <label class="node-info-data" >{{ nas_dump['mac'] }}</label>
+                </div>
+            </div>
+            <div class="nas-node-container-sw" id="nas__{{ nas_dump['id'] }}" style="display: none;">
+                {% for sw_dump in nas_dump['sw_dumps'] %}
+                    <div class="sw-node">
+                        <div class="sw-node-info">
+                            
+                            <div class="node-img"><img onclick=openChildContainer("nas__{{ nas_dump['id'] }}-sw__{{ sw_dump['id'] }}") src="/static/img/search_port/sw_folder.png{{ static_ver }}"></div>
+                            <div class="node-info-div">
+                                <label class="node-info-label">Дата:</label>
+                                <label>{{ sw_dump['date'] }}</label>
+                            </div>
+                        </div>
+
+                        <div class="sw-node-container-sw" id="nas__{{ nas_dump['id'] }}-sw__{{ sw_dump['id'] }}" style="display: none;">
+                            {% for sw in sw_dump['sw_list'] %}
+                                <div class="sw-port">
+                                    <div class="node-info-div">
+                                        <label class="node-info-label">Порт:</label>
+                                        <span class="node-info-data">{{ sw['port'] }}</span>
+                                        
+                                    </div>
+                                    <div class="node-info-div">
+                                        <label class="node-info-label">Название:</label>
+                                        <span class="node-info-data">{{ sw['name'] }}</span>
+                                        
+                                    </div>
+                                    <div class="node-info-div">
+                                        <label class="node-info-label">IP:</label>
+                                        <a target="_blank" href="http://{{ sw['host'] }}">{{ sw['host'] }}</a>
+                                        
+                                    </div>
+
+                                    <div class="node-info-div">
+                                        <label class="node-info-label">ProxyVPN:</label>
+                                        <a target="_blank" href="{{ url_for('forward_gateway_open', ip=sw.host, port=80) }}">Открыть</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    
+</div>

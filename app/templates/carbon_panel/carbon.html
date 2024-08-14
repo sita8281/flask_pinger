@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/carbon_panel/carbon.css') }}{{ static_ver }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modals/modals.css') }}{{ static_ver }}">
+    <title>Carbon Manager</title>
+</head>
+
+<body>
+
+    <div id="root-win"></div>
+
+    {% include 'header.html' %}
+
+    <a href="" class="mini-panel">Открыть</a>
+
+    <div class="info-container"></div>
+
+    <div class="main-block">
+        {% if params == 'create_statement' %}
+        <label style="font-size: 30px; color: green; margin-bottom: 30px;">Выберите от кого создавать заявку</label>
+        {% endif %}
+        <div class="search-panel">
+            <a href="javascript:searchUsers();"><img class="img-search" src="{{ url_for('static', filename='img/search32.png') }}{{ static_ver }}" alt=""></a>
+            <input type="text" class="search-input" name="search" placeholder="Найти пользователя..">
+            <a style="margin-left: 10px;" href=""><img src="{{ url_for('static', filename='img/update32.png') }}{{ static_ver }}" alt=""></a>
+        </div>
+        <div class="tree-container">
+            {% for tr in tree %}
+            <div class="folder-div">
+                <div></div>
+                {% if tr['type'] == 'user' and params == 'create_statement' %}
+                <a id="a-{{ tr['iid'] }}" class="main-level-a" href="javascript:createWinAddState('{{ tr['name'] }}', '{{ tr['iid'] }}');">
+                {% else %}
+                <a id="a-{{ tr['iid'] }}" class="main-level-a" href="javascript:openChild('{{ tr['iid'] }}', 'a-{{ tr['iid'] }}');">
+                {% endif %}
+                    {% if tr['type'] == 'folder' %}
+                    <img src="{{ url_for('static', filename='img/folder16.png') }}{{ static_ver }}" alt=""> {{ tr['name'] }}
+                    {% elif tr['type'] == 'server' %}
+                    <img src="{{ url_for('static', filename='img/server16.png') }}{{ static_ver }}" alt=""> {{ tr['name'] }}
+                    {% elif tr['type'] == 'user' %}
+                    <img src="{{ url_for('static', filename='img/users16.png') }}{{ static_ver }}" alt=""> {{ tr['name'] }} &lt;{{ tr['login'] }}&gt;
+                    {% endif %}
+                    
+                </a>
+        
+            </div>
+        
+            <div class="child-folder" id="{{ tr['iid'] }}">
+        
+                {% for child in tr['child'] %}
+                <div id="-{{ child['login'] }}" style="display: flex" class="div-users">
+                    <div style="height: 16px;;"><img src="{{ url_for('static', filename='img/users16.png') }}{{ static_ver }}" alt=""></div>
+                    {% if params == 'create_statement' %}
+                    
+                    <a class="users" href="javascript:createWinAddState('{{ child['name'] }}', '{{ child['iid'] }}');" id="{{ child['login'] }}">
+                        {{ child['name'] }} &lt;{{ child['login'] }}&gt;
+                    </a>
+                    {% else %}
+                    <a class="users" href="javascript:clickUserButton('{{ child['iid']}}', '{{ child['login'] }}');" id="{{ child['login'] }}">
+                        {{ child['name'] }} &lt;{{ child['login'] }}&gt;
+                    </a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+        
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+    <script src="{{ url_for('static', filename='js/carbon.js') }}{{ static_ver }}"></script>
+    <script src="{{ url_for('static', filename='js/modals/modals.js') }}{{ static_ver }}"></script>
+    <script>
+
+        function autoOpenClient() {
+            let search_input = document.getElementsByClassName('search-input')[0];
+            search_input.value = '{{ login }}';
+        }
+        autoOpenClient();
+        searchUsers('{{ login }}', is_event=false);
+    </script>
+</body>
+</html>

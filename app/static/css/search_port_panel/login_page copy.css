@@ -1,0 +1,19 @@
+.right-panel-container {
+    
+}
+
+#input-form {
+    display: none;
+}
+
+#search-anim {
+    display: none;
+}
+
+#not-found {
+    display: none;
+}
+
+#error {
+    display: none;
+}

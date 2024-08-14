@@ -1,0 +1,79 @@
+.all-list {
+    width: 100%;
+}
+
+.statement-block {
+    margin-top: 10px;
+    display: flex;
+    width: 100%;
+    background-color: #f0f0f0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.statement-block:hover {
+    background-color: rgba(68, 202, 255, 0.507);
+    transition: 0.2s;
+}
+
+.statement-block div {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+
+.date-block {
+    width: 20%;
+    display: inline;
+    margin-left: 10px;
+}
+
+.info-block {
+    width: 60%;
+    display: inline;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.id-block {
+    font-size: 12px;
+}
+
+.ticket-block {
+    color: #4cabca
+
+}
+.ticket-block-redirect {
+    color: white;
+    background-color: rgb(59, 115, 219);
+    font-size: 13px;
+    border-radius: 10px;
+    text-decoration: none;
+    height: 20px;
+    padding-left: 1px;
+    padding-right: 1px;
+
+}
+.ticket-block-redirect:hover {
+    background-color: rgb(5, 69, 187);
+
+}
+.state-block {
+    width: 20%;
+    display: inline;
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 1200px) {
+    .statement-block div {
+        font-size: 12px;
+    }
+    .ticket-block-redirect {
+        font-size: 10px;
+    }
+}

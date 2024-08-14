@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_panel.css') }}{{ static_ver }}">
+    <title>Document</title>
+</head>
+
+{% include 'header.html' %}
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: rgb(255, 255, 255);
+
+    }
+    table td, th {
+        border: 1px rgb(190, 190, 190) solid;
+    }
+
+</style>
+
+<body>
+    <div class="admin-panel-div">
+        <div class="div-label">Админ панель</div>
+        <div class="admin-panel-divs">
+            <div class="admin-panel-left-div">{% include 'admin_panel/admin_panel_left.html' %}</div>
+            <hr>
+            <div class="admin-panel-right-div">
+                <div class="admin-panel-right-label">Список пользователей</div>
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Логин</th>
+                                <th>Carbon-логин</th>
+                                <th>Уровень прав</th>
+                                <th>Последнее посещение</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                                <tr>
+                                    <td><img src="/static/img/user.png{{ static_ver }}"></td>
+                                    <td>{{ user.login }}</td>
+                                    <td>{{ user.carbon_login }}</td>
+                                    <td>{{ user.privilege }}</td>
+                                    <td>{{ user.last_visit }}</td>
+                                    <td>
+                                        <form action="{{ url_for('del_user') }}" method="post">
+                                            <input type="hidden" value="{{ user.login }}", name="login">
+                                            <input type="submit" value="Удалить">
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="{{ url_for('change_user') }}" method="get">
+                                            <input type="hidden" value="{{ user.login }}", name="login">
+                                            <input type="submit" value="Изменить">
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% for category, message in get_flashed_messages(with_categories=true) %}
+                    <a class="flash-{{ category }}">{{ message }}</a>
+                {% endfor %}
+            </div>
+            
+        </div>
+         
+    </div>
+    
+</body>
+</html>

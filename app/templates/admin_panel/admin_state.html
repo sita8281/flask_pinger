@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_panel.css') }}{{ static_ver }}">
+    <title>Document</title>
+</head>
+
+{% include 'header.html' %}
+
+<body>
+    <div class="admin-panel-div">
+        <div class="div-label">Админ панель</div>
+        <div class="admin-panel-divs">
+            <div class="admin-panel-left-div">{% include 'admin_panel/admin_panel_left.html' %}</div>
+            <hr>
+            <div class="admin-panel-right-div">
+                <div class="admin-panel-right-label">Состояние сервера</div>
+                <div>
+                    <div>
+                        {% if states.nas_daemon %}
+                            <label style="font-weight: bold;">NAS Poller:</label><span>поток активен</span>
+                        {% else %}
+                            <label style="font-weight: bold;">NAS Poller:</label><span>поток остановлен</span>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        {% if states.vpn_daemon %}
+                            <label style="font-weight: bold;">VPN Gateway:</label><span>поток активен</span>
+                        {% else %}
+                            <label style="font-weight: bold;">VPN Gateway:</label><span>поток остановлен</span>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        {% if states.icmp_daemon %}
+                            <label style="font-weight: bold;">ICMP Pinger:</label><span>поток активен</span>
+                        {% else %}
+                            <label style="font-weight: bold;">ICMP Pinger:</label><span>поток остановлен</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+         
+    </div>
+    
+</body>
+</html>

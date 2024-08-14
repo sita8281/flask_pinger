@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Config Storage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cfg_panel/style.css') }}{{ static_ver }}">
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="cfg_box">
+        <div class="cfg_top">
+            Хранилище конфигураций
+        </div>
+        <div class="cfg_middle">
+            <div class="cfg_list">
+                <div class="cfg_list_top">
+                    <a style="margin-top: 10px; margin-bottom: 10px;" href="{{ url_for('configs', action='new')}}">
+                        <img class="img_btn" src="{{ url_for('static', filename='img/cfg/add.svg') }}{{ static_ver }}">
+                        Создать новый конфиг
+                    </a>
+                    <label>Список конфигов</label>
+                </div>
+                <div class="cfg_list_box">
+                    {% for cfg in cfgs %}
+                        {% if current_cfg.id == cfg.id %}
+                        <a class="cfg_file cfg_file_select" href="{{ url_for('config', iid=cfg.id) }}">
+                        {% else %} 
+                        <a class="cfg_file" href="{{ url_for('config', iid=cfg.id) }}">
+                        {% endif %}  
+                            <img class="img_btn" src="{{ url_for('static', filename='img/cfg/file.svg') }}{{ static_ver }}">
+                            {{ cfg.name }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="cfg_redactor">
+                {% if not current_cfg %}
+                    {% for category, message in get_flashed_messages(with_categories=true) %}
+                    <a class="flash_{{ category }}">{{ message }}</a>
+                    {% endfor %}
+                {% endif %}
+                {% if action == "new" %}
+                <div class="cfg_redactor_top">Создание нового конфига</div>
+                <div class="cfg_redactor_box">
+                    <form class="form_new" action="{{ url_for('create_config') }}" method="post">
+                        <button class="btn">
+                            <img class="img_btn" src="{{ url_for('static', filename='img/cfg/save.svg') }}{{ static_ver }}">
+                            Сохранить
+                        </button>
+                        {% for category, message in get_flashed_messages(with_categories=true) %}
+                            <a class="flash_{{ category }}">{{ message }}</a>
+                        {% endfor %}
+                        <label>Название конфига</label>
+                        <input class="name_cfg" type="text" placeholder="name" name="name" value="{{ current_cfg.name }}" autocomplete="off" minlength="3" required>
+                        <label>Конфиг</label>
+                        <textarea name="cfg" placeholder="config" autocomplete="off" minlength="3" required>{{ current_cfg.text }}</textarea>
+                    </form>
+                </div>
+                {% else %}
+                    {% if current_cfg %}
+                    <div class="cfg_redactor_top">Редактирование конфига</div>
+                    <div class="cfg_redactor_box">
+                        <form class="form_new" action="{{ url_for('update_config', iid=current_cfg.id) }}" method="post">
+                            <div class="cfg_redactor_panel">
+                                <button class="btn">
+                                    <img class="img_btn" src="{{ url_for('static', filename='img/cfg/save.svg') }}{{ static_ver }}">
+                                    Сохранить
+                                </button>
+                                <a class="btn" href="{{ url_for('config', iid=current_cfg.id, download=1) }}">
+                                    <img class="img_btn" src="{{ url_for('static', filename='img/cfg/download.svg') }}{{ static_ver }}">
+                                    Скачать
+                                </a>
+                                <a class="btn" href="{{ url_for('delete_config', iid=current_cfg.id) }}" method="post">
+                                    <img class="img_btn" src="{{ url_for('static', filename='img/cfg/delete.svg') }}{{ static_ver }}">
+                                    Удалить
+                                </a>
+                            </div>
+                            {% for category, message in get_flashed_messages(with_categories=true) %}
+                                <a class="flash_{{ category }}">{{ message }}</a>
+                            {% endfor %}
+                            <label>Название конфига</label>
+                            <input class="name_cfg" type="text" placeholder="name" name="name" value="{{ current_cfg.name }}" autocomplete="off" minlength="3" required>
+                            <label>Конфиг</label>
+                            <textarea name="cfg" placeholder="config" autocomplete="off" minlength="3" required>{{ current_cfg.text }}</textarea>
+                        </form>
+                    </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

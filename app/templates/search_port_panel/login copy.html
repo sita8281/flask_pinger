@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/search_port_panel/generic.css') }}{{ static_ver }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/search_port_panel/left_panel.css') }}{{ static_ver }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/search_port_panel/login_page.css') }}{{ static_ver }}">
+    <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}{{ static_ver }}"></script>
+    <title>Search Port</title>
+</head>
+
+<style>
+    #search-login {
+        color: black;
+    }
+</style>
+
+
+<body>
+    {% include 'header.html' %}
+    <div class="left-panel-button">
+        <img src="{{ url_for('static', filename='img/search_port/menu.png') }}{{ static_ver }}">
+    </div>
+    <div class="main-div">
+        <div class="label-container">
+            <label>Search Port (утилита поиска)</label>
+        </div>
+        <div class="content-container">
+            <div class="left-panel-container">
+                 {% include 'search_port_panel/left_panel.html' %}
+            </div>
+
+            <div class="right-panel-container">
+                <div class="right-label">
+                    <img src="{{ url_for('static', filename='img/search_port/menu.png') }}{{ static_ver }}">
+                    Раздел поиска портов по логину
+                </div>
+
+                <div class="action-panel">
+                    <div class="window-div"  id="input-form">
+                        <label class="window-label">Введите логин</label>
+                        <div class="window-middle">
+                            <label>Логин</label>
+                            <input class="base-input" type="text" autocomplete="off">
+                        </div>
+                        <div class="window-buttons">
+                            <button class="base-button">Найти</button>
+                        </div>
+                    </div>
+
+                    <div class="window-div" id="search-anim">
+                        <label class="window-label">Выполняется поиск..</label>
+
+                        <div class="window-icon">
+                            <span class="loader"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="window-div" id="not-found">
+                        <label class="window-label">Не удалось найти порт</label>
+
+                        <div class="window-icon">
+                            <img src="{{ url_for('static', filename='img/search_port/cross.png') }}{{ static_ver }}">
+                        </div>
+                    </div>
+
+                    <div class="window-div" id="error">
+                        <label class="window-label">При поиске возникла ошибка</label>
+
+                        <div class="window-icon">
+                            <img src="{{ url_for('static', filename='img/search_port/cross.png') }}{{ static_ver }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-panel">
+                    <div class="nas-list-node">
+                        <div class="nas-node-info">
+                            <img  onclick="openSw()" class="img-tree rotate" src="{{ url_for('static', filename='img/search_port/triangle.png') }}{{ static_ver }}">
+                            <img class="img-icon" src="{{ url_for('static', filename='img/search_port/nas_folder.png') }}{{ static_ver }}">
+                            <div class="div-in-nas-node">
+                                <label>Дата создания:</label>
+                                <span>2024/02/27 12:25</span>
+                            </div>
+
+                            <div class="div-in-nas-node">
+                                <label>Login:</label>
+                                <span>4345673122349</span>
+                            </div>
+
+                            <div class="div-in-nas-node">
+                                <label>MAC:</label>
+                                <span>FF-FF-FF-FF-FF-FF</span>
+                            </div>
+                        </div>
+                        <div class="sw-container">
+                            
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="nas-list-node">
+                        8787878
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
+
+<script>
+
+    function openSw() {
+        if ($('.img-tree').hasClass('rotate')) {
+            $('.img-tree').removeClass('rotate')
+        } else {
+            $('.img-tree').addClass('rotate')
+        }
+        $('.sw-container').slideToggle();
+        
+    }
+</script>
+
+<script>
+</script>

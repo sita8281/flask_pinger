@@ -1,0 +1,147 @@
+
+
+.cfg_box {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    padding: 2px;
+    margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid;
+    display: block;
+    width: 1200px;
+    height: 100%;
+    background-color: azure;
+}
+
+.cfg_top {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #327aff;
+    color: white;
+    height: 40px;
+    line-height: 40px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.cfg_middle {
+    display: flex;
+    flex-direction: row;
+}
+
+.cfg_list {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.cfg_list_top {
+    display: flex;
+    flex-direction: column;
+}
+
+.cfg_list_box {
+    display: flex;
+    flex-direction: column;
+}
+
+.cfg_redactor {
+    width: 75%;
+    padding: 10px;
+}
+
+.cfg_redactor_top {
+    font-size: 20px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.form_new {
+    display: flex;
+    flex-direction: column;
+}
+
+.form_new textarea {
+    height: calc(100vh - 320px);
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    overflow-x: scroll;
+}
+.form_new label {
+    margin-top: 10px;
+}
+
+.name_cfg {
+    padding: 5px;
+}
+
+.cfg_redactor_panel { 
+    display: flex;
+    align-items: flex-start;
+    height: 40px;
+}
+
+.flash_error {
+    color: red;
+}
+
+.flash_success {
+    color: green;
+}
+
+.btn { 
+    width: 120px;
+    justify-content: center;
+    font-size: 13px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(0, 110, 255);
+    max-height: 40px;
+    line-height: 40px;
+    display: flex;
+    color: white;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.btn:hover {
+    background-color: rgb(0, 69, 160);
+}
+
+.img_btn {
+    width: 20px;
+    margin-right: 5px;
+}
+
+.cfg_file {
+    font-size: 14px;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+    background-color: rgb(255, 236, 201);
+    border: 1px solid transparent;
+
+}
+
+.cfg_file:hover {
+    background-color: rgb(238, 213, 166);
+    
+
+}
+
+.cfg_file_select {
+    border:1px solid rgb(0, 0, 0);
+}

@@ -1,0 +1,51 @@
+<style>
+    table {
+        border-collapse: collapse;
+
+    }
+    td {
+        border: 1px solid #c0c0c0;
+        font-size: 12px;
+    }
+    th {
+        border: 1px solid #c0c0c0;
+        background-color: #0064c2;
+        text-align: left;
+        color: white;
+        font-weight: normal;
+    }
+</style>
+
+<table>
+    <colgroup>
+        <col span="1" style="width: 110px;">
+        <col span="1" style="width: 40px;">
+        <col span="1" style="width: 160px;">
+        <col span="1" style="width: 80px;">
+        <col span="1" style="width: 80px;">
+        <col span="1" style="width: 80px;">
+    </colgroup>
+    <tr>
+        <th>Дата</th>
+        <th>Интервал</th>
+        <th>Описание</th>
+        <th>Мб. Вх.</th>
+        <th>Мб. Исх.</th>
+        <th>Сумма</th>
+        <th>Пользователь</th>
+      
+    </tr>
+    
+    {% for session in sessions %}
+    <tr>
+        <td>{{ session[0] }}</td>
+        <td>{{ session[1] }}</td>
+        <td>{{ session[2] }}</td>
+        <td>{{ session[3] }}</td>
+        <td>{{ session[4] }}</td>
+        <td>{{ session[5] }}</td>
+        <td>{{ session[6] }}</td>
+      </tr>
+    {% endfor %}
+    
+  </table>

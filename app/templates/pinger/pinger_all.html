@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pinger_panel.css') }}{{ static_ver }}">
+    <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}{{ static_ver }}"></script>
+    <script src="{{ url_for('static', filename='js/pinger.js') }}{{ static_ver }}"></script>
+    <title>Pinger</title>
+</head>
+
+{% include 'header.html' %}
+
+
+
+<div class="modal__window">
+
+</div>
+
+
+
+<body>
+
+    <div class="div-place-modal"></div>
+
+    <div class="main__div">
+
+
+        <div class="pass__div">
+
+        </div>
+
+        <div class="label__div">
+            <div></div>
+            ICMP Monitoring
+        </div>
+
+
+        <div class="tool__panel">
+            <a href="{{ url_for('add_folder') }}"><img src="{{ url_for('static', filename='img/create_folder.png') }}{{ static_ver }}" alt=""></a>
+            <a href="{{ url_for('add_host') }}"><img src="{{ url_for('static', filename='img/create_host.png') }}{{ static_ver }}" alt=""></a>
+            <a href="javascript: runPingALL()"><img src="{{ url_for('static', filename='img/check_all.png') }}{{ static_ver }}" alt=""></a>
+            <a href="javascript: runPingDEAD()"><img src="{{ url_for('static', filename='img/check_dead.png') }}{{ static_ver }}" alt=""></a>
+            <input type="text" autocomplete="off" placeholder="Ip, название...">
+        </div>
+        
+
+        <div class="content__div">
+            <div class="folders__div">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                
+                    <tbody>
+                        {% for img, name, endpoint in static_folders %}
+                            {% if current_folder == endpoint %}
+                            <tr class="selected__folder">
+                            {% else %}
+                            <tr>
+                            {% endif %}
+                                <td class="__folder">
+                                    <img src="{{ url_for('static', filename='img/' + img + '.png') }}{{ static_ver }}" alt="">
+                                    <a href="{{ url_for('main_pinger', folder=endpoint) }}">{{ name }}</a>
+                                </td>
+                                <td></td>
+                            </tr>
+                        {% endfor %}
+
+                        {% for folder in folders %}
+                            {% if current_folder == folder.id %}
+                            <tr class="selected__folder">
+                            {% else %}
+                            <tr class="__folder">
+                            {% endif %}
+                                <td >
+                                    <img src="{{ url_for('static', filename='img/folder.png') }}{{ static_ver }}" alt="">
+                                    <a href="{{ url_for('main_pinger', folder=folder.id) }}">{{ folder.name }}</a>
+                                </td>
+                                <td>
+                                    <a href="javascript:deleteFolder('{{ url_for('delete_folder', folder=folder.id) }}')">
+                                        <img src="{{ url_for('static', filename='img/cross2.png') }}{{ static_ver }}" alt="">
+                                    </a>
+                                    <a href="{{ url_for('change_folder', folder=folder.id) }}">
+                                        <img src="{{ url_for('static', filename='img/pencil.png') }}{{ static_ver }}" alt="">
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="hosts__div">
+                <table>
+                    <thead>
+                        <th class="status__column"></th>
+                        <th class="name__column">Name</th>
+                        <th class="ip__column">IP address</th>
+                        <th class="change__state__column">Change state</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        {% for host in hosts %}
+                            <tr class=status__column id="{{ host.id }}">
+                                <td class="status-td" id="{{ host.state }}">
+                                    {% if host.checking == 1 %}
+                                        <img src="{{ url_for('static', filename='img/clock.png') }}{{ static_ver }}" alt="">
+                                    {% elif host.state == 'online' %}
+                                        <img src="{{ url_for('static', filename='img/icmp_good.png') }}{{ static_ver }}" alt="">
+                                    {% elif host.state == 'offline' %}
+                                        <img src="{{ url_for('static', filename='img/icmp_bad.png') }}{{ static_ver }}" alt="">
+                                    {% elif host.state == 'error' %}
+                                        <img src="{{ url_for('static', filename='img/icmp_bad.png') }}{{ static_ver }}" alt="">
+                                    {% elif host.state == 'pause' %}
+                                        <img src="{{ url_for('static', filename='img/pause1.png') }}{{ static_ver }}" alt="">
+                                    {% endif %}
+                                </td>
+                                <td class="name__column">{{ host.name }}</td>
+                                <td class="ip__column"><a target="_blank" href="http://{{ host.ip }}/">{{ host.ip }}</a></td>
+                                <td class="change__state__column">{{ host.change_state }}</td>
+                                <td>
+
+                                
+                                    <div class="mobile__advanced__host">
+                                        <a href="javascript:advWindowOpen('{{ host.id }}', '{{ host.ip }}')">Ещё..</a>
+                                    </div>
+                                    <div class="desktop__advanced__host">
+                                        <a href="javascript:delWindowHost('{{ url_for('delete_host', host=host.id) }}')">
+                                            <img src="{{ url_for('static', filename='img/cross2.png') }}{{ static_ver }}" alt="">
+                                        </a>
+                                        <a href="{{ url_for('change_host', host=host.id) }}">
+                                            <img src="{{ url_for('static', filename='img/pencil.png') }}{{ static_ver }}" alt="">
+                                        </a>
+                                        <a href="telnet://{{ host.ip }}/">
+                                            <img src="{{ url_for('static', filename='img/tel.png') }}{{ static_ver }}" alt="">
+                                        </a>
+                                        <a target="_blank" href="{{ url_for('forward_gateway_open', ip=host.ip, port=80) }}">
+                                            <img src="{{ url_for('static', filename='img/web.png') }}{{ static_ver }}" alt="">
+                                        </a>
+                                     
+                                    </div>
+                                    
+                                    
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+
+        // сортировка таблицы хостов
+        const table = document.querySelector(".hosts__div table");
+        const th = table.querySelectorAll("th");
+        
+
+        th.forEach((header) => {
+        header.addEventListener("click", function () {
+            
+            let tbody = table.querySelector("tbody");
+            let rows = [...tbody.rows];
+
+            let columnIndex = header.cellIndex;
+            let sortDirection =
+            header.getAttribute("data-sort-direction") === "asc" ? "desc" : "asc";
+            header.setAttribute("data-sort-direction", sortDirection);
+
+            rows.sort((a, b) => {
+            let aValue = a.cells[columnIndex].textContent;
+            let bValue = b.cells[columnIndex].textContent;
+
+            if (sortDirection === "asc") {
+                return aValue > bValue ? 1 : -1;
+            } else {
+                return bValue > aValue ? 1 : -1;
+            }
+            });
+
+            tbody.remove();
+            tbody = document.createElement("tbody");
+            rows.forEach((row) => tbody.appendChild(row));
+            table.appendChild(tbody);
+        });
+        });
+
+
+
+
+        //обработчик поля поиска хостов
+        //прослушиватель ввода текста в поле
+        document.querySelector('.tool__panel input').addEventListener('input', searchHostsHandler)
+
+        //функция обработки введёного текста
+        function searchHostsHandler(widget) {
+            
+            //получаем из таблицы список хостов
+            let hosts = document.querySelector('.hosts__div table').
+              querySelector('tbody').querySelectorAll('tr')
+            
+            //получаем введёный текст, уменьшаем его
+            let text = widget.target.value.toLowerCase();
+
+            //если поле поиска полностью пустое, возращаем видимость всем хостам
+            if (!text) {
+
+                //в цикле меняем style.display
+                hosts.forEach(function(host) {
+                        host.style.display = 'table-row';
+                })  
+                return;
+            }
+            
+            //цикл поиска по хостам (имя и ip)
+            hosts.forEach(function(host) {
+                let name = host.children[1].textContent.toLowerCase();
+                let ip = host.children[2].textContent.toLowerCase();
+                
+                if (name.indexOf(text) == -1 && ip.indexOf(text) == -1) {
+                    host.style.display = 'none';
+                } else {
+                    host.style.display = 'table-row';
+                }
+            })
+            
+        }
+
+
+        // синхронизация хостов с сервером и обновление данных
+        // обновление интервалом 1 сек
+        function getHostAjax() {
+            $.ajax({
+                type: "GET",
+                url: document.location.href,
+                data: "data=json",
+                dataType: "json",
+                timeout: 5000,
+                success: function (response) {
+                    setTimeout(getHostAjax, 1000);
+                    compareHosts(response);
+                },
+                error: function (response, exc) {
+                    location.reload();
+                    
+                }
+            });
+        }
+
+        // сравнивает список хостов с сервера и текущий DOM-древа
+        // если что-то изменяется то, добавляет или удаляет хост
+        // так же подменяет данные, без пересоздания элемента <tr>, если они поменялись
+        function compareHosts(hostsObj) {
+            let rows = $('.hosts__div table tbody tr')
+            for (let i=0; i < rows.length; i++) {
+                let hostObj = hostsObj[rows[i].id]
+                if (hostObj) {
+                    // если на сервере данные хоста поменялись, меняем в DOM
+                    let ip = rows[i].children[2].textContent;
+                    let name = rows[i].children[1].textContent;
+                    let state = rows[i].children[0].id;
+                    let change_state = rows[i].children[3].textContent
+
+                    if (ip != hostObj['ip']) {
+                        rows[i].children[2].innerHTML = `<a target="_blank" href="${hostObj['ip']}">${hostObj['ip']}</a>`;
+                    }
+                    
+                    if (name != hostObj['name']) {
+                        rows[i].children[1].innerHTML = hostObj['name'];
+                    }
+                    
+                    if (state != hostObj['state']) {
+                        rows[i].children[0].id = hostObj['state'];
+                        rows[i].children[0].childNodes[1].src = getSrcImg(hostObj['state'])
+                        
+                    }
+
+                    if (change_state != hostObj['change_state']) {
+                        rows[i].children[3].innerHTML = hostObj['change_state'];
+                    }
+                    
+                } else {
+                    // если на сервере хост исчез, удаляем из DOM
+                    rows[i].remove();
+                }
+            }
+
+            // если на сервере появился новый хост в проверяемой папке, то создать его в DOM
+            for (let key in hostsObj) {
+                if (!document.getElementById(key)) {
+                    appendNewHost(
+                        id=key,
+                        ip=hostsObj[key]['ip'],
+                        name=hostsObj[key]['name'],
+                        state=hostsObj[key]['state'],
+                        changeState=hostsObj[key]['change_state']
+                    )
+                }
+            }
+            
+        }
+
+        function getSrcImg(state) {
+            switch (state) {
+                case 'online': return '/static/img/icmp_good.png{{ static_ver }}';
+                case 'offline': return '/static/img/icmp_bad.png{{ static_ver }}';
+                case 'pause': return '/static/img/pause1.png{{ static_ver }}';
+                case 'checking': return '/static/img/clock.png{{ static_ver }}';
+                case 'cross': return '/static/img/cross2.png{{ static_ver }}';
+                case 'pencil': return '/static/img/pencil.png{{ static_ver }}';
+                case 'telnet': return '/static/img/tel.png{{ static_ver }}';
+                case 'web': return '/static/img/web.png{{ static_ver }}';
+                default: '/static/img/icmp_bad.png{{ static_ver }}';
+            }
+        }
+
+        function appendNewHost(id, ip, name, state, changeState) {
+            let newTR = $(`
+            <tr id=${id}>
+                <td id=${state}>
+                    <img src=${getSrcImg(state)}></img>
+                </td>
+                <td>${name}</td>
+                <td class="ip__column"><a href="http://${ip}"></td>
+                <td>${changeState}</td>
+                <td>
+                    <div class="mobile__advanced__host"><a href="javascript:advWindowOpen('${id}', '${ip}')">Ещё..</a></div>
+                    <div class="desktop__advanced__host">
+                        <a href=javascript:delWindowHost("/pinger_panel/host_delete/${id}")>
+                            <img src="${getSrcImg('cross')}">
+                        </a>
+                        <a href="/pinger_panel/change_host/${id}">
+                            <img src="${getSrcImg('pencil')}">
+                        </a>
+                        <a href="telnet://${ip}">
+                            <img src="${getSrcImg('telnet')}">
+                        </a>
+                        <a href="">
+                            <img src="${getSrcImg('web')}">
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            `)
+
+            newTR.appendTo($('.hosts__div table tbody'))
+        }
+
+
+        function deleteFolder(url) {
+
+            let modal_window = `
+            <div class="ask__delete">
+                <div class="modal__label">Удаление</div>
+                <div class="modal__info">
+                    Вы действительно хотите удалить эту папку?
+                    Хосты находящиеся в ней будут удалены
+                </div>
+                <div class="modal__buttons">
+                    <a href="${url}">Да</a>
+                    <a href="javascript:winCancel()">Нет</a>
+                </div>
+            </div>`;
+            
+            $('.modal__window').html(modal_window);
+            $('.modal__window').css('display', 'block')
+
+            
+        }
+
+        function winCancel() {
+            $('.modal__window').css('display', 'none')
+        }
+
+        function delWindowHost(url) {
+
+            let modal_window = `
+            <div class="ask__delete">
+                <div class="modal__label">Удаление</div>
+                <div class="modal__info">
+                    Вы действительно хотите удалить хост?
+                </div>
+                <div class="modal__buttons">
+                    <a href="${url}">Да</a>
+                    <a href="javascript:winCancel()">Нет</a>
+                </div>
+            </div>`;
+
+            $('.modal__window').html(modal_window);
+            $('.modal__window').css('display', 'block')
+
+
+        }
+
+        function advWindowOpen(id, ip) {
+            let modal_window = `
+            <div class="advanced__window">
+                <a href="javascript:delWindowHost('/pinger_panel/host_delete/${id}')"><img src="{{ url_for('static', filename='img/cross2.png') }}{{ static_ver }}">Удалить</a>
+                <a href="/pinger_panel/change_host/${id}"><img src="{{ url_for('static', filename='img/pencil.png') }}{{ static_ver }}">Изменить</a>
+                <a href="telnet://${ip}"><img src="{{ url_for('static', filename='img/tel.png') }}{{ static_ver }}">Открыть Telnet</a>
+                <a target="_blank" href="/forward_gateway/?ip=${ip}&port=80"><img src="{{ url_for('static', filename='img/web.png') }}{{ static_ver }}">Открыть через VPN</a>
+                <a href="javascript: advWindowClose()">Закрыть</a>
+            </div>
+            `
+            //$('.main__div').css({overflow: 'hidden', 'white-space': 'nowrap', 'height': '1px'})
+            $('.modal__window').html(modal_window);
+            $('.modal__window').css({display: 'block'});
+            $('body').css('overflow', 'hidden')
+
+        }
+
+        function advWindowClose() {
+            $('.modal__window').html('');
+            $('.modal__window').css({display: 'none'});
+            $('body').css('overflow', 'visible')
+        }
+
+        function runPingALL() {
+            $.ajax({
+                type: "post",
+                url: "/pinger_panel/check/all",
+                dataType: "text",
+                success: function (response) {
+                    alert(response);
+                }
+            });
+        }
+
+        function runPingDEAD() {
+            $.ajax({
+                type: "post",
+                url: "/pinger_panel/check/dead",
+                dataType: "text",
+                success: function (response) {
+                    alert(response);
+                }
+            });
+        }
+
+        function runPingONE(id) {
+            $.ajax({
+                type: "post",
+                url: "/pinger_panel/check/" + id,
+                dataType: "text",
+                success: function (response) {
+                    alert(response);
+                }
+            });
+        }
+        
+
+        // ЗАПУСК ЦИКЛА СИНХРОНИЗАЦИИ ХОСТОВ С СЕРВЕРОМ
+        getHostAjax();
+
+
+
+
+    </script>
+
+</body>
+</html>

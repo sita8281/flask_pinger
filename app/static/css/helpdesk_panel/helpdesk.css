@@ -1,0 +1,174 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+    
+}
+
+body {
+    display: table-cell;
+}
+
+.site-header {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    background: linear-gradient(rgb(178, 239, 243), rgb(119, 153, 161));
+    box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.6);
+    white-space: nowrap;
+}
+
+.helpdesk-logo-img {
+    background-image: url('../images/operator.png');
+    background-position: center;
+    background-size: cover;
+    width: 80px;
+    height: 80px;
+}
+
+.helpdesk-logo {
+    align-items: center;
+    display: flex;
+}
+
+.helpdesk-logo a {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-left: 10px;
+    font-size: 60px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.helpdesk-back-page {
+    align-items: center;
+    display: flex;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.helpdesk-back-img {
+    background-image: url('../images/back.png');
+    background-position: center;
+    background-size: cover;
+    width: 80px;
+    height: 80px;
+}
+
+.helpdesk-back-img:hover {
+    border: 3px solid rgb(16, 128, 1);
+}
+
+.tool-bar {
+    margin-top: 15px;
+    width: 100%;
+    height: auto;
+    
+}
+
+.buttons-block {
+    width: 100%;
+    display: flex;
+}
+
+.button-tool {
+    background-position: center;
+    background-size: cover;
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    border: 4px solid rgb(103, 173, 231);
+    margin-left: 10px;
+    transition: 0.2s;
+}
+.button-tool:hover {
+    border: 4px solid rgb(5, 92, 163);
+    transition: 0.2s;
+}
+
+#btn-add {
+    background-image: url('/static/img/plus2.png');
+}
+
+#btn-remove {
+    background-image: url('/static/img/cross3.png');
+}
+#btn-update {
+    background-image: url('/static/img/update.png');
+}
+
+.current-user {
+    margin-left: 10px;
+    margin-top: 5px;
+    display: block;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 30px;
+}
+.empty-div {
+    height: 70px;
+}
+
+
+.main-div {
+    height: 100%;
+    width: 1200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white
+}
+
+.statement-list {
+   display: flex; 
+   width: 100%;
+}
+
+@media screen and (max-width: 1200px) {
+    .site-header {
+        position: fixed;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        display: flex;
+        background: linear-gradient(rgb(178, 239, 243), rgb(119, 153, 161));
+        box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.6);
+        white-space: nowrap;
+    }
+
+    .empty-block {
+        height: 50px;
+    }
+
+    .helpdesk-back-img {
+        width: 40px;
+        height: 40px;
+    }
+    .helpdesk-logo-img {
+        width: 40px;
+        height: 40px;
+    }
+    .helpdesk-logo a {
+        font-size: 30px;
+    }
+
+    .main-div {
+        width: 100%;
+    }
+    .buttons-block div{
+        width: 45px;
+        height: 45px;
+    }
+    .current-user {
+        font-size: 18px;
+    }
+    .empty-div {
+        height: 50px;
+    }
+}
+
+

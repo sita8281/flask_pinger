@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_panel.css') }}{{ static_ver }}">
+    <title>Document</title>
+</head>
+
+{% include 'header.html' %}
+
+<body>
+    <div class="admin-panel-div">
+        <div class="div-label">Админ панель</div>
+        <div class="admin-panel-divs">
+            <div class="admin-panel-left-div">{% include 'admin_panel/admin_panel_left.html' %}</div>
+            <hr>
+            <div class="admin-panel-right-div">
+                <div class="admin-panel-right-label">Forward-Gateway (VPN) настройки</div>
+                <hr>
+                <form method="post">
+                    <p>
+                        <label style="font-size: 14px;">Примечание: Firewall не должен блокировать или закрывать порт</label>
+                    </p>
+                    <p>
+                        {{ form.external_ip.label() }}
+                        {{ form.external_ip() }}
+                    </p>
+                    <p>
+                        {{ form.external_port.label() }}
+                        {{ form.external_port() }}
+                    </p>
+                    <p>
+                        {{ form.submit() }}
+                    </p>
+
+                </form>
+
+                {% for category, message in get_flashed_messages(with_categories=true) %}
+                    <a class="flash-{{ category }}">{{ message }}</a>
+                {% endfor %}
+                    
+            </div>
+            
+            
+        </div>
+         
+    </div>
+    
+</body>
+</html>

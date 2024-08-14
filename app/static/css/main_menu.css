@@ -1,0 +1,86 @@
+.main-menu {
+    width: 600px;
+    height: 670px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 150px;
+    border: 4px solid rgb(37, 101, 219);
+    border-radius: 20px;
+
+
+}
+
+.title-title {
+    width: 100%;
+    display: flex;
+}
+
+.a-menu {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    font-family: monospace;
+}
+
+.content-menu {
+    display: block;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.href-a {
+    display: block;
+    font-size: 20px;
+    text-align: left;
+    padding: 5px;
+    background-color: rgb(237, 242, 253);
+    border-radius: 5px;
+    border: 2px solid rgb(37, 101, 219);
+    font-family: monospace;
+    margin-top: 10px;
+    text-decoration: none;
+    color: rgb(37, 101, 219);
+    height: 40px;
+    line-height: 40px;
+    
+}
+
+.href-a:hover {
+    font-weight: bold;
+}
+
+.adv-content {
+    display: flex;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.adv-a {
+    font-family: monospace;
+    font-size: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    color: black;
+}
+
+.adv-a:hover {
+    color: blue;
+}
+
+@media screen and (max-width: 1200px) {
+    .main-menu {
+        width: 100%;
+        margin-top: 100px;
+        border: none;
+    }
+    .a-menu {
+        font-size: 20px;
+
+    }
+}

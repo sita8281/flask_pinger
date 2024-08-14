@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_panel.css') }}{{ static_ver }}">
+    <title>Document</title>
+</head>
+
+{% include 'header.html' %}
+
+<body>
+    <div class="admin-panel-div">
+        <div class="div-label">Админ панель</div>
+        <div class="admin-panel-divs">
+            <div class="admin-panel-left-div">{% include 'admin_panel/admin_panel_left.html' %}</div>
+            <hr>
+            <div class="admin-panel-right-div">
+                <div class="admin-panel-right-label">Редактирование пользователя</div>
+                <div>
+                    <form action="" method="post">
+                        <p>
+                            {{ form.username.label() }}
+                            {{ form.username() }}
+                        </p>
+                        <p>
+                            {{ form.password.label() }}
+                            {{ form.password() }}
+                        </p>
+                        <p>
+                            {{ form.carbon_login.label() }}
+                            {{ form.carbon_login() }}
+                        </p>
+                        <p>
+                            {{ form.carbon_passw.label() }}
+                            {{ form.carbon_passw() }}
+                        </p>
+                        <p>
+                            {{ form.privilege.label() }}
+                            {{ form.privilege() }}
+                        </p>
+                        <p>
+                            {{ form.submit() }}
+                        </p>
+                        </form>
+                </div>
+                {% for category, message in get_flashed_messages(with_categories=true) %}
+                    <a class="flash-{{ category }}">{{ message }}</a>
+                {% endfor %}
+            </div>
+            
+        </div>
+         
+    </div>
+    
+</body>
+</html>

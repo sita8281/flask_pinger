@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}{{ static_ver }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Menu</title>
+</head>
+
+<body>
+    {% include 'header.html' %}
+
+    <div class="dash-board">
+        <div class="dash-top">
+            <label class="dash-label">Dashboard / {{ current_user.login }}</label>
+        </div>
+        <div class="dash-bottom">
+            <div class="panel menu">
+                <label class="panel-label">Меню</label>
+                <a class="href-a" href="{{ url_for('carbon_main') }}">
+                    <img src="{{ url_for('static', filename='img/carbon32.png') }}{{ static_ver }}" alt=""
+                        style="margin-right: 5px;">Carbon Manager
+                </a>
+    
+                <a class="href-a" href="{{ url_for('main_pinger', folder='all') }}">
+                    <img src="{{ url_for('static', filename='img/server2.png') }}{{ static_ver }}" alt="" style="margin-right: 5px;">Pinger
+                </a>
+    
+                <a class="href-a" href="{{ url_for('search_port_login') }}">
+                    <img src="{{ url_for('static', filename='img/search_port.png') }}{{ static_ver }}" alt=""
+                        style="margin-right: 5px;">Search Port
+                </a>
+    
+                <a class="href-a" href="{{ url_for('helpdesk_main') }}">
+                    <img src="{{ url_for('static', filename='img/operator32.png') }}{{ static_ver }}" alt=""
+                        style="margin-right: 5px;">HelpDesk
+                </a>
+    
+                <a class="href-a" href="{{ url_for('gpon_panel') }}">
+                    <img src="{{ url_for('static', filename='img/huawei32.png') }}{{ static_ver }}" alt="" style="margin-right: 5px;">Gpon
+                    Interface
+                </a>
+    
+                <a class="href-a" href="{{ url_for('connect_statements') }}">
+                    <img src="{{ url_for('static', filename='img/operator32.png') }}{{ static_ver }}" alt="" style="margin-right: 5px;">Доп.
+                    заявки
+                </a>
+    
+                <a class="href-a" href="{{ url_for('admin_panel') }}">
+                    <img src="{{ url_for('static', filename='img/server_settings.png') }}{{ static_ver }}" alt=""
+                        style="margin-right: 5px;">Админ Панель
+                </a>
+    
+                <a class="href-a" href="{{ url_for('configs') }}">
+                    <img src="{{ url_for('static', filename='img/cfg/cfg.svg') }}{{ static_ver }}"
+                        style="margin-right: 5px;width:32px">Хранилище конфигов
+                </a>
+            </div>
+
+            <div class="panel deads">
+                <a class="panel-label" href="{{ url_for('main_pinger', folder='dead') }}">Dead Hosts</a>
+                <div class="deads-list"></div>
+            </div>
+
+            <div class="panel online">
+                <label class="panel-label">Пользователи онлайн</label>
+                <table class="online-users">
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function logoutUser(login, id) {
+            $.ajax({
+                type: "post",
+                url: "/disconnect",
+                data: {login: login, id: id},
+                dataType: "json",
+                success: function (response) {
+                }
+            });
+        }
+
+        
+
+        setInterval(() => {
+            $.ajax({
+                type: "get",
+                url: "/pinger_panel/dead",
+                data: {data: 'json'},
+                dataType: "json",
+                timeout: 2000,
+                success: function (response) {
+                    let lstDeads = '';
+                    obj = Object.entries(response);
+                    obj.forEach(element => {
+                        lstDeads = lstDeads + `<div class="dead-host"><img src="/static/img/warning.svg{{ static_ver }}"><a href="/pinger_panel/dead">${element[1].name}</a></div>`
+                    });
+                    $('.deads-list').html(lstDeads);
+                    
+                }
+            });
+            $.ajax({
+            type: "get",
+            url: "/online_users",
+            dataType: "json",
+            success: function (response) {
+                let lstUsers = '';
+                response.forEach(element => {
+                    if (element.status == 'logout') {
+                        console.log(element.status);
+                        lstUsers = lstUsers + `<tr><td><img src="/static/img/user.svg{{ static_ver }}"></td><td>${element.login}</td><td>${element.address}</td><td>отключение..</td></tr>`;
+                    } else {
+                        lstUsers = lstUsers + `<tr><td><img src="/static/img/user.svg{{ static_ver }}"></td><td>${element.login}</td><td>${element.address}</td><td><a href="javascript:logoutUser('${element.login}', '${element.id}')">Logout</a></td></tr>`;
+                    }
+                });
+                $('.online-users').html(lstUsers);
+            }
+            });
+        }, 2000)
+        
+        
+    </script>
+</body>
+
+</html>

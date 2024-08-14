@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_panel.css') }}{{ static_ver }}">
+    <title>Document</title>
+</head>
+
+{% include 'header.html' %}
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: rgb(255, 255, 255);
+
+    }
+    table td, th {
+        border: 1px rgb(190, 190, 190) solid;
+    }
+
+</style>
+
+<body>
+    <div class="admin-panel-div">
+        <div class="div-label">Админ панель</div>
+        <div class="admin-panel-divs">
+            <div class="admin-panel-left-div">{% include 'admin_panel/admin_panel_left.html' %}</div>
+            <hr>
+            <div class="admin-panel-right-div">
+                <div class="admin-panel-right-label">Gpon VLAN профили</div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>VLAN</th>
+                            <th>Gemport</th>
+                            <th>Srv-profile</th>
+                            <th>Line-profile</th>
+                            <th></th>
+                        </tr>
+                        {% for profile in profiles %}
+                            <tr>
+                                <td>{{ profile.id }}</td>
+                                <td>{{ profile.name }}</td>
+                                <td>{{ profile.vlan }}</td>
+                                <td>{{ profile.gemport }}</td>
+                                <td>{{ profile.srv_profile }}</td>
+                                <td>{{ profile.line_profile }}</td>
+                                <td>
+                                    <a href="{{ url_for('admin_gpon_del', iid=profile.id) }}">
+                                        <img src="{{ url_for('static', filename='img/cross2.png') }}{{ static_ver }}">
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div style="margin-top: 20px;">
+                    <form action="{{ url_for('admin_gpon_add') }}" method="post">
+                        {{ form.name() }}
+                        {{ form.vlan() }}
+                        {{ form.gemport() }}
+                        {{ form.srv_profile() }}
+                        {{ form.line_profile() }}
+                        <p>
+                            {{ form.submit() }}
+                        </p>
+                        
+                    </form>
+                    
+                </div>
+
+                {% for category, message in get_flashed_messages(with_categories=true) %}
+                    <a class="flash-{{ category }}">{{ message }}</a>
+                {% endfor %}
+                
+            </div>
+            
+        </div>
+         
+    </div>
+    
+</body>
+</html>

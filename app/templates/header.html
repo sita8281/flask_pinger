@@ -1,0 +1,31 @@
+
+
+
+<header>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}{{ static_ver }}">
+    <script src="/static/js/jquery-3.7.1.min.js{{ static_ver }}"></script>
+    <script src="{{ url_for('static', filename='js/ajax_session_holder.js') }}{{ static_ver }}"></script>
+    
+
+    <a class="a-open-menu" href="javascript:openMenu()">Меню</a>
+    <div class="div-container-menu">
+        <a class="a-menu-button" href="{{ url_for('index') }}">Главная</a>
+        <a class="a-menu-button" href="{{ url_for('carbon_main') }}">Carbon</a>
+        <a class="a-menu-button" href="{{ url_for('main_pinger', folder='all') }}">Pinger</a>
+        <a class="a-menu-button" href="{{ url_for('search_port_login') }}">Search-Port</a>
+        <a class="a-menu-button" href="{{ url_for('helpdesk_main') }}">HelpDesk</a>
+        <a class="a-menu-button" href="{{ url_for('gpon_panel') }}">GPON</a>
+        <a class="a-menu-button" href="{{ url_for('connect_statements') }}">Доп. заявки</a>
+        <a class="a-menu-button" href="{{ url_for('admin_panel') }}">
+            <img style="width: 20px;" src="{{ url_for('static', filename='img/settings.svg') }}{{ static_ver }}">
+        </a>
+    </div>
+    <a class="a-logout" href="{{ url_for('logout') }}">Выйти</a>
+</header>
+
+
+<script>
+    function openMenu() {
+        $('.div-container-menu').slideToggle();
+    }
+</script>
