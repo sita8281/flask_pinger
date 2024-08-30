@@ -15,11 +15,6 @@ app_logger = logging.getLogger('app')
 admin_logger = logging.getLogger('admin_panel')
 
 
-def generate_password_crypto(password):
-    crypt = Fernet(key=app.config.get('DEIL_API_CRYPTO'))
-    return crypt.encrypt(password.encode('utf-8'))
-
-
 @app.route('/index', methods=['POST', 'GET'])
 @app.route('/', methods=['POST', 'GET'])
 @login_required
@@ -89,8 +84,8 @@ def add_user():
                     login=form.username.data,
                     passw=generate_password_hash(form.password.data),
                     privilege=form.privilege.data,
-                    carbon_login=form.carbon_login.data,
-                    carbon_passw=generate_password_crypto(form.carbon_passw.data),
+                    carbon_login='',
+                    carbon_passw='',
                     user_data = '',
                     last_visit = None,
                 )
@@ -155,9 +150,9 @@ def change_user():
 
         try:
             if validate(form.carbon_login.data):
-                usr.carbon_login = form.carbon_login.data
+                usr.carbon_login = ''
             if validate(form.carbon_passw.data):
-                usr.carbon_passw = generate_password_crypto(form.carbon_passw.data)
+                usr.carbon_passw = ''
             if validate(form.username.data):
                 usr.login = form.username.data
             if validate(form.password.data):
