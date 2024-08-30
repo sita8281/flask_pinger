@@ -8,8 +8,8 @@ import logging
 
 frontend_version = '11'
 app = Flask(__name__)
-app.config.from_object('config.ProductionConfig')
-# app.config.from_object('config.DevelopementConfig')
+# app.config.from_object('config.ProductionConfig')
+app.config.from_object('config.DevelopementConfig')
 # app.config.from_object('config.DisableIcmpConfig')
 
 logging.getLogger('app').info('Приложение запущено и ожидает новых подключений')
@@ -27,16 +27,6 @@ def front_ver():
 from . import (
     views,
     models,
-    views_cfg_storage,
-    views_permission,
     views_pinger,
-    views_gpon,
-    views_search_port,
-    views_forward_gateway,
-    views_carbon,
-    deil_api_context,
-    views_helpdesk,
-    views_connect_statements,
-    views_online_users
 )
 from .modules import pinger
