@@ -7,7 +7,7 @@
 *.so
 
 # ignore DB
-main_db.sqlite3
+# main_db.sqlite3
 
 # Distribution / packaging
 .Python
